@@ -10,10 +10,6 @@ namespace schoolExercise
 {
     class Program
     {
-
-        //READ ME!!!!!!!!!!!!!!!!!!!!!!!!! Στις γραμμες 38 και 264 με 276 βρισκεται σε comment η προσπαθεια Assignments Per Course Per Student
-        //η υπαρχουσα "PrintAssignmentsPerStudent" τυπωνει τα assignments κατω απο τους μαθητες, χωρις να αναφερει το course στα οποια ανηκουν τα assignments
-
         static void Main(string[] args)
         {
             Menu();
@@ -61,6 +57,10 @@ namespace schoolExercise
                 {
                     data.PrintStudentsWithDueDate();
                 }
+                else if (option == "7")
+                {
+                    data.PrintDbInfo();
+                }
                 else if (option == "STOP")
                 {
                     Environment.Exit(0);
@@ -77,6 +77,7 @@ namespace schoolExercise
             Console.WriteLine("4. Enter Trainer");
             Console.WriteLine("5. Enter Assignment");
             Console.WriteLine("6. Enter Due Date");
+            Console.WriteLine("7. Display Database Information");
             string option = Console.ReadLine();
             return option;
         }
@@ -134,9 +135,9 @@ namespace schoolExercise
 
             //creating assignments
             Assignment a1 = new Assignment(1, "Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
-            Assignment a2 = new Assignment(2,"Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
-            Assignment a3 = new Assignment(3,"Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
-            Assignment a4 = new Assignment(4,"Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
+            Assignment a2 = new Assignment(2, "Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
+            Assignment a3 = new Assignment(3, "Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
+            Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
             Assignment a5 = new Assignment(5, "Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
             Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
 
@@ -278,6 +279,35 @@ namespace schoolExercise
             //ACSList.Add(ACS4);
             //ACSList.Add(ACS5);
             //ACSList.Add(ACS6);
+        }
+
+        public void PrintDbInfo()
+        {
+            //var assignList = Services.GetAllAssignments();
+            //var trainList = Services.GetAllTrainers();
+            //var stuList = Services.GetAllStudents();
+            var courList = Services.GetAllCourses();
+
+            foreach (var item in courList)
+            {
+                item.Output();
+            }
+
+            //foreach (var item in assignList)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //foreach (var item in trainList)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            //foreach (var item in stuList)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
         }
 
         public void PrintAllStudents()
