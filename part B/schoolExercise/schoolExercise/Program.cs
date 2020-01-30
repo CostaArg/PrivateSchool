@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,11 +98,11 @@ namespace schoolExercise
         public Data()
         {
             //creating students
-            Student s1 = new Student("Panagiotis", "Grigoriou", new DateTime(1987, 3, 4), 3000);
-            Student s2 = new Student("Konstantinos", "Pantelidis", new DateTime(1991, 6, 2), 4000);
-            Student s3 = new Student("Spiros", "Aggelatos", new DateTime(1996, 4, 7), 3500);
-            Student s4 = new Student("Dimitris", "Pantelopoulos", new DateTime(2000, 5, 2), 6200);
-            Student s5 = new Student("Antonis", "Mixelakakis", new DateTime(1989, 10, 3), 5800);
+            Student s1 = new Student(1, "Panagiotis", "Grigoriou", new DateTime(1987, 3, 4), 3000);
+            Student s2 = new Student(2, "Konstantinos", "Pantelidis", new DateTime(1991, 6, 2), 4000);
+            Student s3 = new Student(3, "Spiros", "Aggelatos", new DateTime(1996, 4, 7), 3500);
+            Student s4 = new Student(4, "Dimitris", "Pantelopoulos", new DateTime(2000, 5, 2), 6200);
+            Student s5 = new Student(5, "Antonis", "Mixelakakis", new DateTime(1989, 10, 3), 5800);
 
             Students.Add(s1);
             Students.Add(s2);
@@ -109,10 +111,10 @@ namespace schoolExercise
             Students.Add(s5);
 
             //creating courses
-            Course c1 = new Course("Javascript", "Web Development", "Practical Subject", new DateTime(2020, 1, 10), new DateTime(2020, 3, 11));
-            Course c2 = new Course("C++", "Object-Oriented Programming", "Practical Subject", new DateTime(2020, 1, 18), new DateTime(2020, 4, 2));
-            Course c3 = new Course("Pascal", "Procedural Programming", "Theoretical Subject", new DateTime(2020, 2, 15), new DateTime(2020, 5, 20));
-            Course c4 = new Course("Visual Basic", "Windows Application Development", "Practical Subject", new DateTime(2020, 3, 20), new DateTime(2020, 6, 1));
+            Course c1 = new Course(1, "Javascript", "Web Development", "Practical Subject", new DateTime(2020, 1, 10), new DateTime(2020, 3, 11));
+            Course c2 = new Course(2, "C++", "Object-Oriented Programming", "Practical Subject", new DateTime(2020, 1, 18), new DateTime(2020, 4, 2));
+            Course c3 = new Course(3, "Pascal", "Procedural Programming", "Theoretical Subject", new DateTime(2020, 2, 15), new DateTime(2020, 5, 20));
+            Course c4 = new Course(4, "Visual Basic", "Windows Application Development", "Practical Subject", new DateTime(2020, 3, 20), new DateTime(2020, 6, 1));
 
             Courses.Add(c1);
             Courses.Add(c2);
@@ -120,10 +122,10 @@ namespace schoolExercise
             Courses.Add(c4);
 
             //creating trainers
-            Trainer t1 = new Trainer("Giannis", "Aggelopoulos", "Object-Oriented Programming");
-            Trainer t2 = new Trainer("Manolis", "Daskalakis", "Procedural Programming");
-            Trainer t3 = new Trainer("Giorgos", "Mpatzoglou", "Procedural Programming");
-            Trainer t4 = new Trainer("Thanassis", "Giorgakopoulos", "Object-Oriented Programming");
+            Trainer t1 = new Trainer(1, "Giannis", "Aggelopoulos", "Object-Oriented Programming");
+            Trainer t2 = new Trainer(2, "Manolis", "Daskalakis", "Procedural Programming");
+            Trainer t3 = new Trainer(3, "Giorgos", "Mpatzoglou", "Procedural Programming");
+            Trainer t4 = new Trainer(4, "Thanassis", "Giorgakopoulos", "Object-Oriented Programming");
 
             Trainers.Add(t1);
             Trainers.Add(t2);
@@ -131,12 +133,12 @@ namespace schoolExercise
             Trainers.Add(t4);
 
             //creating assignments
-            Assignment a1 = new Assignment("Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
-            Assignment a2 = new Assignment("Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
-            Assignment a3 = new Assignment("Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
-            Assignment a4 = new Assignment("Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
-            Assignment a5 = new Assignment("Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
-            Assignment a6 = new Assignment("Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
+            Assignment a1 = new Assignment(1, "Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
+            Assignment a2 = new Assignment(2,"Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
+            Assignment a3 = new Assignment(3,"Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
+            Assignment a4 = new Assignment(4,"Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
+            Assignment a5 = new Assignment(5, "Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
+            Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
 
             Assignments.Add(a1);
             Assignments.Add(a2);
@@ -758,6 +760,7 @@ namespace schoolExercise
 
     class Student
     {
+        public int StudentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -770,12 +773,13 @@ namespace schoolExercise
 
         }
 
-        public Student(string firstname, string lastname, DateTime dateofbirth, int tuitionfees)
+        public Student(int studentid, string firstname, string lastname, DateTime dateofbirth, int tuitionfees)
         {
+            StudentId = studentid;
             FirstName = firstname;
             LastName = lastname;
             DateOfBirth = dateofbirth;
-            TuitionFees = tuitionfees;            
+            TuitionFees = tuitionfees;
         }
 
         public void Output()
@@ -789,6 +793,7 @@ namespace schoolExercise
 
     class Course
     {
+        public int CourseId { get; set; }
         public string Title { get; set; }
         public string Stream { get; set; }
         public string Type { get; set; }
@@ -803,8 +808,9 @@ namespace schoolExercise
 
         }
 
-        public Course(string title, string stream, string type, DateTime startdate, DateTime enddate)
+        public Course(int courseid, string title, string stream, string type, DateTime startdate, DateTime enddate)
         {
+            CourseId = courseid;
             Title = title;
             Stream = stream;
             Type = type;
@@ -824,6 +830,7 @@ namespace schoolExercise
 
     class Trainer
     {
+        public int TrainerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Subject { get; set; }
@@ -833,8 +840,9 @@ namespace schoolExercise
 
         }
 
-        public Trainer(string firstname, string lastname, string subject)
+        public Trainer(int trainerid, string firstname, string lastname, string subject)
         {
+            TrainerId = trainerid;
             FirstName = firstname;
             LastName = lastname;
             Subject = subject;
@@ -850,6 +858,7 @@ namespace schoolExercise
 
     class Assignment
     {
+        public int AssignmentId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime SubDateTime { get; set; }
@@ -861,8 +870,9 @@ namespace schoolExercise
 
         }
 
-        public Assignment(string title, string description, DateTime subdatetime, double oralmark, double totalmark)
+        public Assignment(int assignmentid, string title, string description, DateTime subdatetime, double oralmark, double totalmark)
         {
+            AssignmentId = assignmentid;
             Title = title;
             Description = description;
             SubDateTime = subdatetime;
@@ -1112,6 +1122,181 @@ namespace schoolExercise
             return Student.FirstName;
 
         }
+    }
+
+    class Services
+    {
+        public static string conString = ConfigurationManager.ConnectionStrings["schoolConnection"].ConnectionString;
+
+        public static List<Student> GetAllStudents()
+        {
+            List<Student> tempStus = new List<Student>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "Select * from Student";
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Student stu = new Student(
+                        Convert.ToInt32(reader["StudentId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        Convert.ToDateTime(reader["DateOfBirth"]),
+                        Convert.ToInt32(reader["TuitionFees"])
+                        );
+                        tempStus.Add(stu);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempStus;
+
+        }
+
+        public static List<Course> GetAllCourses()
+        {
+            List<Course> tempCours = new List<Course>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "Select * from Course";
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        tempCours.Add(cour);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempCours;
+
+        }
+
+        public static List<Trainer> GetAllTrainers()
+        {
+            List<Trainer> tempTrains = new List<Trainer>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "Select * from Trainer";
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Trainer train = new Trainer(
+                        Convert.ToInt32(reader["TrainerId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        reader["Subject"].ToString()
+                        );
+                        tempTrains.Add(train);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempTrains;
+
+        }
+
+        public static List<Assignment> GetAllAssignments()
+        {
+            List<Assignment> tempAssign = new List<Assignment>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "Select * from Assignment";
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Assignment assign = new Assignment(
+                        Convert.ToInt32(reader["AssignmentId"]),
+                        reader["Title"].ToString(),
+                        reader["Description "].ToString(),
+                        Convert.ToDateTime(reader["SubDateTime"]),
+                        Convert.ToDouble(reader["OralMark"]),
+                        Convert.ToDouble(reader["TotalMark"])
+                        );
+                        tempAssign.Add(assign);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempAssign;
+
+        }
+
     }
 
 }
