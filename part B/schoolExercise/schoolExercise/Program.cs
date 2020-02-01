@@ -40,6 +40,12 @@ namespace schoolExercise
                 else if (option == "2")
                 {
                     data.MakeStudents();
+
+                    foreach (var item in data.Students)
+                    {
+                        Services.InsertStudent(item);
+                    }
+
                 }
                 else if (option == "3")
                 {
@@ -54,10 +60,22 @@ namespace schoolExercise
                 else if (option == "4")
                 {
                     data.MakeTrainers();
+
+                    foreach (var item in data.Trainers)
+                    {
+                        Services.InsertTrainer(item);
+                    }
+
                 }
                 else if (option == "5")
                 {
                     data.MakeAssignments();
+
+                    foreach (var item in data.Assignments)
+                    {
+                        Services.InsertAssignment(item);
+                    }
+
                 }
                 else if (option == "6")
                 {
@@ -293,9 +311,9 @@ namespace schoolExercise
 
         public void PrintDbInfo()
         {
-            //var assignList = Services.GetAllAssignments();
-            //var trainList = Services.GetAllTrainers();
-            //var stuList = Services.GetAllStudents();
+            var assignList = Services.GetAllAssignments();
+            var trainList = Services.GetAllTrainers();
+            var stuList = Services.GetAllStudents();
             var courList = Services.GetAllCourses();
 
             foreach (var item in courList)
@@ -303,20 +321,20 @@ namespace schoolExercise
                 item.Output();
             }
 
-            //foreach (var item in assignList)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in assignList)
+            {
+                item.Output();
+            }
 
-            //foreach (var item in trainList)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in trainList)
+            {
+                item.Output();
+            }
 
-            //foreach (var item in stuList)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in stuList)
+            {
+                item.Output();
+            }
 
         }
 
@@ -655,68 +673,6 @@ namespace schoolExercise
 
         }
 
-        public Course MakeCourseDb()
-        {
-            Course newCour = new Course();
-
-            Console.WriteLine("Enter course's title: ");
-            newCour.Title = Console.ReadLine();
-
-            if (newCour.Title.Length < 1)
-            {
-                Console.WriteLine("Title was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Title = "HTML";
-            }
-
-            Console.WriteLine("Enter course's stream: ");
-            newCour.Stream = Console.ReadLine();
-
-            if (newCour.Stream.Length < 1)
-            {
-                Console.WriteLine("Stream was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Stream = "Web Development";
-            }
-
-            Console.WriteLine("Enter course's type: ");
-            newCour.Type = Console.ReadLine();
-
-            if (newCour.Type.Length < 1)
-            {
-                Console.WriteLine("Type was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Type = "Practical Subject";
-            }
-
-            try
-            {
-                Console.WriteLine("Enter course's start date: ");
-                newCour.StartDate = Convert.ToDateTime(Console.ReadLine());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.WriteLine("Will put synthetic data");
-                newCour.StartDate = new DateTime(2020, 5, 10);
-            }
-
-            try
-            {
-                Console.WriteLine("Enter course's end date: ");
-                newCour.EndDate = Convert.ToDateTime(Console.ReadLine());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.WriteLine("Will put synthetic data");
-                newCour.EndDate = new DateTime(2020, 11, 22);
-            }
-
-            return newCour;
-
-        }
-
         public void MakeTrainers()
         {
             string flag;
@@ -923,11 +879,13 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine(Title);
-            Console.WriteLine(Stream);
-            Console.WriteLine(Type);
-            Console.WriteLine(StartDate.ToShortDateString());
-            Console.WriteLine(EndDate.ToShortDateString());
+            Console.WriteLine("------------");
+            Console.WriteLine("Title:      " + Title);
+            Console.WriteLine("Stream:     " + Stream);
+            Console.WriteLine("Type:       " + Type);
+            Console.WriteLine("Start Date: " + StartDate.ToShortDateString());
+            Console.WriteLine("End Date:   " + EndDate.ToShortDateString());
+            Console.WriteLine("------------");
         }
     }
 
@@ -1413,6 +1371,96 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@type", cour.Type);
             sqlCommand.Parameters.AddWithValue("@startDate", cour.StartDate);
             sqlCommand.Parameters.AddWithValue("@endDate", cour.EndDate);
+
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertStudent(Student stu)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO Student (firstname, lastname, dateofbirth, tuitionfees) VALUES(@firstname, @lastname, @dateofbirth, @tuitionfees)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@firstname", stu.FirstName);
+            sqlCommand.Parameters.AddWithValue("@lastname", stu.LastName);
+            sqlCommand.Parameters.AddWithValue("@dateofbirth", stu.DateOfBirth);
+            sqlCommand.Parameters.AddWithValue("@tuitionfees", stu.TuitionFees);
+
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertTrainer(Trainer train)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO Trainer (firstname, lastname, subject) VALUES(@firstname, @lastname, @subject)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@firstname", train.FirstName);
+            sqlCommand.Parameters.AddWithValue("@lastname", train.LastName);
+            sqlCommand.Parameters.AddWithValue("@subject", train.Subject);
+
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertAssignment(Assignment assi)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO Assignment (title, description, subdatetime, oralmark, totalmark) VALUES(@title, @description, @subdatetime, @oralmark, @totalmark)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@title", assi.Title);
+            sqlCommand.Parameters.AddWithValue("@description", assi.Description);
+            sqlCommand.Parameters.AddWithValue("@subdatetime", assi.SubDateTime);
+            sqlCommand.Parameters.AddWithValue("@oralmark", assi.OralMark);
+            sqlCommand.Parameters.AddWithValue("@totalmark", assi.TotalMark);
 
 
             try
