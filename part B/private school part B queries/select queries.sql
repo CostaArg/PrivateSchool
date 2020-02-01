@@ -11,8 +11,11 @@ all courses
 SELECT * FROM [Course]
 
 students per course
-SELECT * FROM [Student]
-WHERE (courseid == givenCourseId) FROM studentPerCourse
+SELECT student.studentid, course.courseid, student.firstname, student.lastname, student.dateofbirth,
+student.tuitionfees, course.title, course.stream, course.type, course.startdate, course.enddate
+FROM ((studentPerCourse
+INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)
+INNER JOIN Course ON studentPerCourse.courseid = Course.courseid);
 
 trainers per course
 

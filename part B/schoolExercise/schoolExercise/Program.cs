@@ -85,6 +85,15 @@ namespace schoolExercise
                 {
                     data.PrintDbInfo();
                 }
+                else if (option == "8")
+                {
+                    data.PutStudentsInCourses();
+
+                    foreach (var item in data.StuCourIdList)
+                    {
+                        Services.InsertStudentPerCourse(item);
+                    }
+                }
                 else if (option == "STOP")
                 {
                     Environment.Exit(0);
@@ -102,6 +111,8 @@ namespace schoolExercise
             Console.WriteLine("5. Enter Assignment");
             Console.WriteLine("6. Enter Due Date");
             Console.WriteLine("7. Display Database Information");
+            Console.WriteLine("8. Insert Student Per Course");
+
             string option = Console.ReadLine();
             return option;
         }
@@ -109,8 +120,6 @@ namespace schoolExercise
 
     class Data
     {
-        //public static string conString = ConfigurationManager.ConnectionStrings["schoolConnection"].ConnectionString;
-
         public List<Student> Students { get; set; } = new List<Student>();
         public List<Course> Courses { get; set; } = new List<Course>();
         public List<Assignment> Assignments { get; set; } = new List<Assignment>();
@@ -121,6 +130,7 @@ namespace schoolExercise
         public List<AssignmentPerStudent> AssignmentsPerStudent { get; set; } = new List<AssignmentPerStudent>();
         public List<CoursePerStudent> CoursesPerStudent { get; set; } = new List<CoursePerStudent>();
         public List<AssignmentCourseStudent> ACSList { get; set; } = new List<AssignmentCourseStudent>();
+        public List<StuCourId> StuCourIdList { get; set; } = new List<StuCourId>();
 
         public Data()
         {
@@ -336,6 +346,25 @@ namespace schoolExercise
                 item.Output();
             }
 
+        }
+
+        public void PutStudentsInCourses()
+        {
+            //Console.WriteLine("Enter student id: ");
+            //int stuId = Convert.ToInt32(Console.ReadLine());
+
+            //Console.WriteLine("Enter course id: ");
+            //int courId = Convert.ToInt32(Console.ReadLine());
+
+            Course newCour = new Course();
+            Student newStu = new Student();
+
+            newCour.CourseId = 5;
+            newStu.StudentId = 5;
+
+            StuCourId scid = new StuCourId(newCour.CourseId, newStu.StudentId);
+
+            StuCourIdList.Add(scid);
         }
 
         public void PrintAllStudents()
@@ -958,7 +987,7 @@ namespace schoolExercise
 
     class StudentPerCourse
     {
-        Course Course { get; set; }
+        public Course Course { get; set; }
 
 
         public StudentPerCourse(Course course, List<Student> students)
@@ -976,6 +1005,23 @@ namespace schoolExercise
                 Console.WriteLine();
                 item.Output();
             }
+        }
+    }
+
+    class StuCourId
+    {
+        public int CourseId { get; set; }
+        public int StudentId { get; set; }
+
+        public StuCourId(int courseId, int studentId)
+        {
+            CourseId = courseId;
+            StudentId = studentId;
+        }
+
+        public StuCourId()
+        {
+
         }
     }
 
@@ -1462,6 +1508,33 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@oralmark", assi.OralMark);
             sqlCommand.Parameters.AddWithValue("@totalmark", assi.TotalMark);
 
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertStudentPerCourse(StuCourId scid)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO studentPerCourse (studentid, courseid) VALUES(@studentid, @courseid)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@studentid", scid.StudentId);
+            sqlCommand.Parameters.AddWithValue("@courseid", scid.CourseId);
 
             try
             {
