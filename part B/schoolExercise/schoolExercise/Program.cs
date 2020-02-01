@@ -44,6 +44,12 @@ namespace schoolExercise
                 else if (option == "3")
                 {
                     data.MakeCourses();
+
+                    foreach (var item in data.Courses)
+                    {
+                        Services.InsertCourse(item);
+                    }
+
                 }
                 else if (option == "4")
                 {
@@ -60,10 +66,6 @@ namespace schoolExercise
                 else if (option == "7")
                 {
                     data.PrintDbInfo();
-                }
-                else if (option == "8")
-                {
-                    Services.InsertCourses(data.MakeCourseDb());
                 }
                 else if (option == "STOP")
                 {
@@ -82,7 +84,6 @@ namespace schoolExercise
             Console.WriteLine("5. Enter Assignment");
             Console.WriteLine("6. Enter Due Date");
             Console.WriteLine("7. Display Database Information");
-            Console.WriteLine("8. Insert Information in Database");
             string option = Console.ReadLine();
             return option;
         }
@@ -590,6 +591,7 @@ namespace schoolExercise
                 }
 
             } while (flag == "Y");
+
         }
 
         public void MakeCourse()
@@ -1398,7 +1400,7 @@ namespace schoolExercise
 
         }
 
-        public static void InsertCourses(Course cour)
+        public static void InsertCourse(Course cour)
         {
             SqlConnection con = new SqlConnection(conString);
 
@@ -1426,7 +1428,6 @@ namespace schoolExercise
             finally
             {
                 con.Close();
-                Console.ReadKey();
             }
         }
 
