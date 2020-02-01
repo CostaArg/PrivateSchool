@@ -61,6 +61,10 @@ namespace schoolExercise
                 {
                     data.PrintDbInfo();
                 }
+                else if (option == "8")
+                {
+                    Services.InsertCourses(data.MakeCourseDb());
+                }
                 else if (option == "STOP")
                 {
                     Environment.Exit(0);
@@ -78,6 +82,7 @@ namespace schoolExercise
             Console.WriteLine("5. Enter Assignment");
             Console.WriteLine("6. Enter Due Date");
             Console.WriteLine("7. Display Database Information");
+            Console.WriteLine("8. Insert Information in Database");
             string option = Console.ReadLine();
             return option;
         }
@@ -85,6 +90,8 @@ namespace schoolExercise
 
     class Data
     {
+        //public static string conString = ConfigurationManager.ConnectionStrings["schoolConnection"].ConnectionString;
+
         public List<Student> Students { get; set; } = new List<Student>();
         public List<Course> Courses { get; set; } = new List<Course>();
         public List<Assignment> Assignments { get; set; } = new List<Assignment>();
@@ -279,6 +286,8 @@ namespace schoolExercise
             //ACSList.Add(ACS4);
             //ACSList.Add(ACS5);
             //ACSList.Add(ACS6);
+
+
         }
 
         public void PrintDbInfo()
@@ -641,6 +650,68 @@ namespace schoolExercise
                 Console.WriteLine("Will put synthetic data");
                 newCour.EndDate = new DateTime(2020, 11, 22);
             }
+
+        }
+
+        public Course MakeCourseDb()
+        {
+            Course newCour = new Course();
+
+            Console.WriteLine("Enter course's title: ");
+            newCour.Title = Console.ReadLine();
+
+            if (newCour.Title.Length < 1)
+            {
+                Console.WriteLine("Title was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Title = "HTML";
+            }
+
+            Console.WriteLine("Enter course's stream: ");
+            newCour.Stream = Console.ReadLine();
+
+            if (newCour.Stream.Length < 1)
+            {
+                Console.WriteLine("Stream was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Stream = "Web Development";
+            }
+
+            Console.WriteLine("Enter course's type: ");
+            newCour.Type = Console.ReadLine();
+
+            if (newCour.Type.Length < 1)
+            {
+                Console.WriteLine("Type was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Type = "Practical Subject";
+            }
+
+            try
+            {
+                Console.WriteLine("Enter course's start date: ");
+                newCour.StartDate = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Will put synthetic data");
+                newCour.StartDate = new DateTime(2020, 5, 10);
+            }
+
+            try
+            {
+                Console.WriteLine("Enter course's end date: ");
+                newCour.EndDate = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Will put synthetic data");
+                newCour.EndDate = new DateTime(2020, 11, 22);
+            }
+
+            return newCour;
 
         }
 
@@ -1325,6 +1396,38 @@ namespace schoolExercise
 
             return tempAssign;
 
+        }
+
+        public static void InsertCourses(Course cour)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO Course (title, stream, type, startdate, enddate) VALUES(@title, @stream, @type, @startdate, @enddate)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@title", cour.Title);
+            sqlCommand.Parameters.AddWithValue("@stream", cour.Stream);
+            sqlCommand.Parameters.AddWithValue("@type", cour.Type);
+            sqlCommand.Parameters.AddWithValue("@startDate", cour.StartDate);
+            sqlCommand.Parameters.AddWithValue("@endDate", cour.EndDate);
+
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+                Console.ReadKey();
+            }
         }
 
     }
