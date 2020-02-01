@@ -170,12 +170,19 @@ namespace schoolExercise
             Trainers.Add(t4);
 
             //creating assignments
-            Assignment a1 = new Assignment(1, "Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
+            //Assignment a1 = new Assignment(1, "Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
+            //Assignment a2 = new Assignment(2, "Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
+            //Assignment a3 = new Assignment(3, "Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
+            //Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
+            //Assignment a5 = new Assignment(5, "Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
+            //Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
+
+            Assignment a1 = new Assignment(1, "Project Bank", "Banking app", new DateTime(2020, 4, 24), 40, 200);
             Assignment a2 = new Assignment(2, "Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
-            Assignment a3 = new Assignment(3, "Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
-            Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
-            Assignment a5 = new Assignment(5, "Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
-            Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
+            Assignment a3 = new Assignment(3, "Project Library", "Book rental", new DateTime(2020, 4, 15), 35, 200);
+            Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution", new DateTime(2020, 1, 2), 73, 100);
+            Assignment a5 = new Assignment(5, "Project Stocks", "Stock notifications", new DateTime(2020, 3, 27), 110, 200);
+            Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint software", new DateTime(2020, 3, 24), 40, 150);
 
             Assignments.Add(a1);
             Assignments.Add(a2);
@@ -325,6 +332,13 @@ namespace schoolExercise
             var trainList = Services.GetAllTrainers();
             var stuList = Services.GetAllStudents();
             var courList = Services.GetAllCourses();
+            //var stuPerCourList = Services.GetAllStuPerCour();
+
+            //foreach (var item in stuPerCourList)
+            //{
+            //    item.OutputStudent();
+            //    item.OutputCourse();
+            //}
 
             foreach (var item in courList)
             {
@@ -347,6 +361,7 @@ namespace schoolExercise
             }
 
         }
+
 
         public void PutStudentsInCourses()
         {
@@ -1010,19 +1025,42 @@ namespace schoolExercise
 
     class StuCourId
     {
-        public int CourseId { get; set; }
         public int StudentId { get; set; }
+        public int CourseId { get; set; }
 
-        public StuCourId(int courseId, int studentId)
+        public StuCourId(int studentId, int courseId)
         {
-            CourseId = courseId;
             StudentId = studentId;
+            CourseId = courseId;
         }
 
         public StuCourId()
         {
 
         }
+    }
+
+    class StuCour
+    {
+        public Student Student { get; set; }
+        public Course Course { get; set; }
+
+        public StuCour(Student student, Course course)
+        {
+            Student = student;
+            Course = course;
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
+        }
+
+        public void OutputStudent()
+        {
+            Student.Output();
+        }
+
     }
 
     class TrainerPerCourse
@@ -1379,7 +1417,7 @@ namespace schoolExercise
                         Assignment assign = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
                         reader["Title"].ToString(),
-                        reader["Description "].ToString(),
+                        reader["Description"].ToString(),
                         Convert.ToDateTime(reader["SubDateTime"]),
                         Convert.ToDouble(reader["OralMark"]),
                         Convert.ToDouble(reader["TotalMark"])
@@ -1401,6 +1439,62 @@ namespace schoolExercise
             }
 
             return tempAssign;
+
+        }
+
+        public static List<StuCour> GetAllStuPerCour()
+        {
+            List<StuCour> tempSPC = new List<StuCour>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "SELECT student.studentid, course.courseid, student.firstname," +
+                        " student.lastname, student.dateofbirth, student.tuitionfees, course.title," +
+                        " course.stream, course.type, course.startdate, course.enddate" +
+                        " FROM((studentPerCourse INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)" +
+                        " INNER JOIN Course ON studentPerCourse.courseid = Course.courseid)";
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Student stu = new Student(
+                        Convert.ToInt32(reader["StudentId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        Convert.ToDateTime(reader["DateOfBirth"]),
+                        Convert.ToInt32(reader["TuitionFees"])
+                        );
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        StuCour stucour = new StuCour(stu, cour);
+                        tempSPC.Add(stucour);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempSPC;
 
         }
 
