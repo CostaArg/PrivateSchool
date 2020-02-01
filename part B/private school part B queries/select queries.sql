@@ -18,6 +18,11 @@ INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)
 INNER JOIN Course ON studentPerCourse.courseid = Course.courseid);
 
 trainers per course
+SELECT trainer.trainerid, course.courseid, trainer.firstname, trainer.lastname, trainer.subject,
+course.title, course.stream, course.type, course.startdate, course.enddate
+FROM ((trainerPerCourse
+INNER JOIN Trainer ON trainerPerCourse.trainerid = Trainer.trainerid)
+INNER JOIN Course ON trainerPerCourse.courseid = Course.courseid);
 
 assignments per course
 

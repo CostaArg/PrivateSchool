@@ -94,6 +94,15 @@ namespace schoolExercise
                         Services.InsertStudentPerCourse(item);
                     }
                 }
+                else if (option == "9")
+                {
+                    data.PutTrainersInCourses();
+
+                    foreach (var item in data.TrainCourIdList)
+                    {
+                        Services.InsertTrainerPerCourse(item);
+                    }
+                }
                 else if (option == "STOP")
                 {
                     Environment.Exit(0);
@@ -112,6 +121,7 @@ namespace schoolExercise
             Console.WriteLine("6. Enter Due Date");
             Console.WriteLine("7. Display Database Information");
             Console.WriteLine("8. Insert Student Per Course");
+            Console.WriteLine("9. Insert Trainer Per Course");
 
             string option = Console.ReadLine();
             return option;
@@ -131,6 +141,7 @@ namespace schoolExercise
         public List<CoursePerStudent> CoursesPerStudent { get; set; } = new List<CoursePerStudent>();
         public List<AssignmentCourseStudent> ACSList { get; set; } = new List<AssignmentCourseStudent>();
         public List<StuCourId> StuCourIdList { get; set; } = new List<StuCourId>();
+        public List<TrainCourId> TrainCourIdList { get; set; } = new List<TrainCourId>();
 
         public Data()
         {
@@ -332,18 +343,30 @@ namespace schoolExercise
             //var trainList = Services.GetAllTrainers();
             //var stuList = Services.GetAllStudents();
             //var courList = Services.GetAllCourses();
-            var stuPerCourList = Services.GetAllStuPerCour();
+            //var stuPerCourList = Services.GetAllStuPerCour();
+            var trainPerCourList = Services.GetAllTrainPerCour();
 
-            foreach (var item in stuPerCourList)
+            foreach (var item in trainPerCourList)
             {
                 Console.WriteLine("===========================================================");
-                Console.WriteLine("Student ID: " + item.Student.StudentId +"  Course ID: " + item.Course.CourseId);
+                Console.WriteLine("Trainer ID: " + item.Trainer.TrainerId + "  Course ID: " + item.Course.CourseId);
                 Console.WriteLine();
-                item.OutputStudent();
+                item.OutputTrainer();
                 item.OutputCourse();
                 Console.WriteLine("===========================================================");
 
             }
+
+            //foreach (var item in stuPerCourList)
+            //{
+            //    Console.WriteLine("===========================================================");
+            //    Console.WriteLine("Student ID: " + item.Student.StudentId +"  Course ID: " + item.Course.CourseId);
+            //    Console.WriteLine();
+            //    item.OutputStudent();
+            //    item.OutputCourse();
+            //    Console.WriteLine("===========================================================");
+
+            //}
 
             //foreach (var item in courList)
             //{
@@ -385,6 +408,25 @@ namespace schoolExercise
             StuCourId scid = new StuCourId(newCour.CourseId, newStu.StudentId);
 
             StuCourIdList.Add(scid);
+        }
+
+        public void PutTrainersInCourses()
+        {
+            //Console.WriteLine("Enter trainer id: ");
+            //int trainId = Convert.ToInt32(Console.ReadLine());
+
+            //Console.WriteLine("Enter course id: ");
+            //int courId = Convert.ToInt32(Console.ReadLine());
+
+            Course newCour = new Course();
+            Trainer newTrain = new Trainer();
+
+            newCour.CourseId = 6;
+            newTrain.TrainerId = 4;
+
+            TrainCourId tcid = new TrainCourId(newCour.CourseId, newTrain.TrainerId);
+
+            TrainCourIdList.Add(tcid);
         }
 
         public void PrintAllStudents()
@@ -962,9 +1004,11 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine(FirstName);
-            Console.WriteLine(LastName);
-            Console.WriteLine(Subject);
+            Console.WriteLine("--------------");
+            Console.WriteLine("First Name:    " + FirstName);
+            Console.WriteLine("Last Name:     " + LastName);
+            Console.WriteLine("Subject:       " + Subject);
+            Console.WriteLine("--------------");
         }
     }
 
@@ -1041,10 +1085,19 @@ namespace schoolExercise
             CourseId = courseId;
         }
 
-        public StuCourId()
-        {
+    }
 
+    class TrainCourId
+    {
+        public int TrainerId { get; set; }
+        public int CourseId { get; set; }
+
+        public TrainCourId(int trainerId, int courseId)
+        {
+            TrainerId = trainerId;
+            CourseId = courseId;
         }
+
     }
 
     class StuCour
@@ -1066,6 +1119,29 @@ namespace schoolExercise
         public void OutputStudent()
         {
             Student.Output();
+        }
+
+    }
+
+    class TrainCour
+    {
+        public Trainer Trainer { get; set; }
+        public Course Course { get; set; }
+
+        public TrainCour(Trainer trainer, Course course)
+        {
+            Trainer = trainer;
+            Course = course;
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
+        }
+
+        public void OutputTrainer()
+        {
+            Trainer.Output();
         }
 
     }
@@ -1505,6 +1581,60 @@ namespace schoolExercise
 
         }
 
+        public static List<TrainCour> GetAllTrainPerCour()
+        {
+            List<TrainCour> tempTPC = new List<TrainCour>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "SELECT trainer.trainerid, course.courseid, trainer.firstname, trainer.lastname, " +
+                        "trainer.subject, course.title, course.stream, course.type, course.startdate, course.enddate " +
+                        "FROM((trainerPerCourse INNER JOIN Trainer ON trainerPerCourse.trainerid = Trainer.trainerid) " +
+                        "INNER JOIN Course ON trainerPerCourse.courseid = Course.courseid); ";
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Trainer train = new Trainer(
+                        Convert.ToInt32(reader["TrainerId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        reader["Subject"].ToString()
+                        );
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        TrainCour traincour = new TrainCour(train, cour);
+                        tempTPC.Add(traincour);
+                    }
+
+                    Console.WriteLine("Database reading was successful!");
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempTPC;
+
+        }
+
         public static void InsertCourse(Course cour)
         {
             SqlConnection con = new SqlConnection(conString);
@@ -1636,6 +1766,33 @@ namespace schoolExercise
 
             sqlCommand.Parameters.AddWithValue("@studentid", scid.StudentId);
             sqlCommand.Parameters.AddWithValue("@courseid", scid.CourseId);
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Records Inserted Successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertTrainerPerCourse(TrainCourId tcid)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO trainerPerCourse (trainerid, courseid) VALUES(@trainerid, @courseid)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@trainerid", tcid.TrainerId);
+            sqlCommand.Parameters.AddWithValue("@courseid", tcid.CourseId);
 
             try
             {
