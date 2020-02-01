@@ -1,33 +1,48 @@
-all students
+--all students
 SELECT * FROM [Student]
 
-all trainers
+--all trainers
 SELECT * FROM [Trainer]
 
-all assignments
+--all assignments
 SELECT * FROM [Assignment]
 
-all courses
+--all courses
 SELECT * FROM [Course]
 
-students per course
+--students per course
 SELECT student.studentid, course.courseid, student.firstname, student.lastname, student.dateofbirth,
 student.tuitionfees, course.title, course.stream, course.type, course.startdate, course.enddate
 FROM ((studentPerCourse
 INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)
 INNER JOIN Course ON studentPerCourse.courseid = Course.courseid);
 
-trainers per course
+--trainers per course
 SELECT trainer.trainerid, course.courseid, trainer.firstname, trainer.lastname, trainer.subject,
 course.title, course.stream, course.type, course.startdate, course.enddate
 FROM ((trainerPerCourse
 INNER JOIN Trainer ON trainerPerCourse.trainerid = Trainer.trainerid)
 INNER JOIN Course ON trainerPerCourse.courseid = Course.courseid);
 
-assignments per course
+--assignments per course
+SELECT assignment.assignmentid, course.courseid, assignment.description, assignment.subdatetime, assignment.oralmark,
+assignment.totalmark, course.title, course.stream, course.type, course.startdate, course.enddate
+FROM ((assignmentPerCourse
+INNER JOIN Assignment ON assignmentPerCourse.assignmentid = Assignment.assignmentid)
+INNER JOIN Course ON assignmentPerCourse.courseid = Course.courseid);
 
-assignments per course per student
+--assignments per course per student
+SELECT assignment.assignmentid, course.courseid, student.studentid, assignment.description, assignment.subdatetime, assignment.oralmark,
+assignment.totalmark, course.title, course.stream, course.type, course.startdate, course.enddate, student.firstname, student.lastname, Student.dateofbirth, student.tuitionfees
+FROM (((assignmentPerCoursePerStudent
+INNER JOIN Assignment ON assignmentPerCoursePerStudent.assignmentid = Assignment.assignmentid)
+INNER JOIN Course ON assignmentPerCoursePerStudent.courseid = Course.courseid)
+INNER JOIN Student ON assignmentPerCoursePerStudent.studentid = Student.studentid);
 
-students with more than one course
-SELECT * FROM [Student]
-WHERE  count(courseid) > 1 FROM studentPerCourse
+--students with more than one course
+SELECT student.studentid, course.courseid, student.firstname, student.lastname, student.dateofbirth,
+student.tuitionfees, course.title, course.stream, course.type, course.startdate, course.enddate
+FROM ((studentPerCourse
+INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)
+INNER JOIN Course ON studentPerCourse.courseid = Course.courseid)
+HAVING count(Course.courseid) > 1;
