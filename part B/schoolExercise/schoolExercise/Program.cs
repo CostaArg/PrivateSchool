@@ -328,37 +328,42 @@ namespace schoolExercise
 
         public void PrintDbInfo()
         {
-            var assignList = Services.GetAllAssignments();
-            var trainList = Services.GetAllTrainers();
-            var stuList = Services.GetAllStudents();
-            var courList = Services.GetAllCourses();
-            //var stuPerCourList = Services.GetAllStuPerCour();
+            //var assignList = Services.GetAllAssignments();
+            //var trainList = Services.GetAllTrainers();
+            //var stuList = Services.GetAllStudents();
+            //var courList = Services.GetAllCourses();
+            var stuPerCourList = Services.GetAllStuPerCour();
 
-            //foreach (var item in stuPerCourList)
+            foreach (var item in stuPerCourList)
+            {
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("Student ID: " + item.Student.StudentId +"  Course ID: " + item.Course.CourseId);
+                Console.WriteLine();
+                item.OutputStudent();
+                item.OutputCourse();
+                Console.WriteLine("===========================================================");
+
+            }
+
+            //foreach (var item in courList)
             //{
-            //    item.OutputStudent();
-            //    item.OutputCourse();
+            //    item.Output();
             //}
 
-            foreach (var item in courList)
-            {
-                item.Output();
-            }
+            //foreach (var item in assignList)
+            //{
+            //    item.Output();
+            //}
 
-            foreach (var item in assignList)
-            {
-                item.Output();
-            }
+            //foreach (var item in trainList)
+            //{
+            //    item.Output();
+            //}
 
-            foreach (var item in trainList)
-            {
-                item.Output();
-            }
-
-            foreach (var item in stuList)
-            {
-                item.Output();
-            }
+            //foreach (var item in stuList)
+            //{
+            //    item.Output();
+            //}
 
         }
 
@@ -887,10 +892,12 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine(FirstName);
-            Console.WriteLine(LastName);
-            Console.WriteLine(DateOfBirth.ToShortDateString());
-            Console.WriteLine(TuitionFees);
+            Console.WriteLine("--------------");
+            Console.WriteLine("First Name:    " + FirstName);
+            Console.WriteLine("Last Name:     " + LastName);
+            Console.WriteLine("Date of Birth: " + DateOfBirth.ToShortDateString());
+            Console.WriteLine("Tuition Fees:  " + TuitionFees);
+            Console.WriteLine("--------------");
         }
     }
 
@@ -923,13 +930,13 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine("------------");
-            Console.WriteLine("Title:      " + Title);
-            Console.WriteLine("Stream:     " + Stream);
-            Console.WriteLine("Type:       " + Type);
-            Console.WriteLine("Start Date: " + StartDate.ToShortDateString());
-            Console.WriteLine("End Date:   " + EndDate.ToShortDateString());
-            Console.WriteLine("------------");
+            Console.WriteLine("--------------");
+            Console.WriteLine("Title:         " + Title);
+            Console.WriteLine("Stream:        " + Stream);
+            Console.WriteLine("Type:          " + Type);
+            Console.WriteLine("Start Date:    " + StartDate.ToShortDateString());
+            Console.WriteLine("End Date:      " + EndDate.ToShortDateString());
+            Console.WriteLine("--------------");
         }
     }
 
