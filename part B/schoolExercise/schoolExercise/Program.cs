@@ -26,16 +26,7 @@ namespace schoolExercise
 
                 if (option == "1")
                 {
-                    data.PrintAllStudents();
-                    data.PrintAllCourses();
-                    data.PrintAllTrainers();
-                    data.PrintAllAssignments();
-                    data.PrintStudentsPerCourse();
-                    data.PrintTrainersPerCourse();
-                    data.PrintAssignmentsPerCourse();
-                    data.PrintAssignmentsPerStudent();
-                    data.PrintMultipleEnrolledStudents();
-                    //data.PrintACS();
+                    data.PrintDbInfo();
                 }
                 else if (option == "2")
                 {
@@ -79,14 +70,6 @@ namespace schoolExercise
                 }
                 else if (option == "6")
                 {
-                    data.PrintStudentsWithDueDate();
-                }
-                else if (option == "7")
-                {
-                    data.PrintDbInfo();
-                }
-                else if (option == "8")
-                {
                     data.PutStudentsInCourses();
 
                     foreach (var item in data.StuCourIdList)
@@ -94,7 +77,7 @@ namespace schoolExercise
                         Services.InsertStudentPerCourse(item);
                     }
                 }
-                else if (option == "9")
+                else if (option == "7")
                 {
                     data.PutTrainersInCourses();
 
@@ -103,7 +86,7 @@ namespace schoolExercise
                         Services.InsertTrainerPerCourse(item);
                     }
                 }
-                else if (option == "10")
+                else if (option == "8")
                 {
                     data.PutAssignmentsInStudentsInCourses();
 
@@ -123,15 +106,13 @@ namespace schoolExercise
         {
             Console.WriteLine("Select an option or enter STOP to exit:");
             Console.WriteLine("1. Print Information");
-            Console.WriteLine("2. Enter Student");
-            Console.WriteLine("3. Enter Course");
-            Console.WriteLine("4. Enter Trainer");
-            Console.WriteLine("5. Enter Assignment");
-            Console.WriteLine("6. Enter Due Date");
-            Console.WriteLine("7. Display Database Information");
-            Console.WriteLine("8. Insert Student Per Course");
-            Console.WriteLine("9. Insert Trainer Per Course");
-            Console.WriteLine("10. Insert Assignment Per Student Per Course");
+            Console.WriteLine("2. Insert Student");
+            Console.WriteLine("3. Insert Course");
+            Console.WriteLine("4. Insert Trainer");
+            Console.WriteLine("5. Insert Assignment");
+            Console.WriteLine("6. Insert Student Per Course");
+            Console.WriteLine("7. Insert Trainer Per Course");
+            Console.WriteLine("8. Insert Assignment Per Student Per Course");
 
             string option = Console.ReadLine();
             return option;
@@ -144,207 +125,13 @@ namespace schoolExercise
         public List<Course> Courses { get; set; } = new List<Course>();
         public List<Assignment> Assignments { get; set; } = new List<Assignment>();
         public List<Trainer> Trainers { get; set; } = new List<Trainer>();
-        public List<StudentPerCourse> StudentsPerCourse { get; set; } = new List<StudentPerCourse>();
-        public List<TrainerPerCourse> TrainersPerCourse { get; set; } = new List<TrainerPerCourse>();
-        public List<AssignmentPerCourse> AssignmentsPerCourse { get; set; } = new List<AssignmentPerCourse>();
-        public List<AssignmentPerStudent> AssignmentsPerStudent { get; set; } = new List<AssignmentPerStudent>();
-        public List<CoursePerStudent> CoursesPerStudent { get; set; } = new List<CoursePerStudent>();
-        public List<AssignmentCourseStudent> ACSList { get; set; } = new List<AssignmentCourseStudent>();
+
         public List<StuCourId> StuCourIdList { get; set; } = new List<StuCourId>();
         public List<TrainCourId> TrainCourIdList { get; set; } = new List<TrainCourId>();
         public List<AssiStuCourId> AssiStuCourIdList { get; set; } = new List<AssiStuCourId>();
 
         public Data()
         {
-            //creating students
-            Student s1 = new Student(1, "Panagiotis", "Grigoriou", new DateTime(1987, 3, 4), 3000);
-            Student s2 = new Student(2, "Konstantinos", "Pantelidis", new DateTime(1991, 6, 2), 4000);
-            Student s3 = new Student(3, "Spiros", "Aggelatos", new DateTime(1996, 4, 7), 3500);
-            Student s4 = new Student(4, "Dimitris", "Pantelopoulos", new DateTime(2000, 5, 2), 6200);
-            Student s5 = new Student(5, "Antonis", "Mixelakakis", new DateTime(1989, 10, 3), 5800);
-
-            Students.Add(s1);
-            Students.Add(s2);
-            Students.Add(s3);
-            Students.Add(s4);
-            Students.Add(s5);
-
-            //creating courses
-            Course c1 = new Course(1, "Javascript", "Web Development", "Practical Subject", new DateTime(2020, 1, 10), new DateTime(2020, 3, 11));
-            Course c2 = new Course(2, "C++", "Object-Oriented Programming", "Practical Subject", new DateTime(2020, 1, 18), new DateTime(2020, 4, 2));
-            Course c3 = new Course(3, "Pascal", "Procedural Programming", "Theoretical Subject", new DateTime(2020, 2, 15), new DateTime(2020, 5, 20));
-            Course c4 = new Course(4, "Visual Basic", "Windows Application Development", "Practical Subject", new DateTime(2020, 3, 20), new DateTime(2020, 6, 1));
-
-            Courses.Add(c1);
-            Courses.Add(c2);
-            Courses.Add(c3);
-            Courses.Add(c4);
-
-            //creating trainers
-            Trainer t1 = new Trainer(1, "Giannis", "Aggelopoulos", "Object-Oriented Programming");
-            Trainer t2 = new Trainer(2, "Manolis", "Daskalakis", "Procedural Programming");
-            Trainer t3 = new Trainer(3, "Giorgos", "Mpatzoglou", "Procedural Programming");
-            Trainer t4 = new Trainer(4, "Thanassis", "Giorgakopoulos", "Object-Oriented Programming");
-
-            Trainers.Add(t1);
-            Trainers.Add(t2);
-            Trainers.Add(t3);
-            Trainers.Add(t4);
-
-            //creating assignments
-            //Assignment a1 = new Assignment(1, "Project Bank", "Banking application for android phones", new DateTime(2020, 4, 24), 40, 200);
-            //Assignment a2 = new Assignment(2, "Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
-            //Assignment a3 = new Assignment(3, "Project Library", "Book rental service", new DateTime(2020, 4, 15), 35, 200);
-            //Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution to cinemas", new DateTime(2020, 1, 2), 73, 100);
-            //Assignment a5 = new Assignment(5, "Project Stocks", "Stock change notifications", new DateTime(2020, 3, 27), 110, 200);
-            //Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint making software", new DateTime(2020, 3, 24), 40, 150);
-
-            Assignment a1 = new Assignment(1, "Project Bank", "Banking app", new DateTime(2020, 4, 24), 40, 200);
-            Assignment a2 = new Assignment(2, "Project E-shop", "Shopping website", new DateTime(2020, 6, 11), 20, 100);
-            Assignment a3 = new Assignment(3, "Project Library", "Book rental", new DateTime(2020, 4, 15), 35, 200);
-            Assignment a4 = new Assignment(4, "Project Cinema", "Movie distribution", new DateTime(2020, 1, 2), 73, 100);
-            Assignment a5 = new Assignment(5, "Project Stocks", "Stock notifications", new DateTime(2020, 3, 27), 110, 200);
-            Assignment a6 = new Assignment(6, "Project Architecture", "Blueprint software", new DateTime(2020, 3, 24), 40, 150);
-
-            Assignments.Add(a1);
-            Assignments.Add(a2);
-            Assignments.Add(a3);
-            Assignments.Add(a4);
-            Assignments.Add(a5);
-            Assignments.Add(a6);
-
-            //putting students in mini-lists (students per Course)
-            List<Student> C1Stu = new List<Student>();
-            List<Student> C2Stu = new List<Student>();
-            List<Student> C3Stu = new List<Student>();
-
-            C1Stu.Add(s2);
-            C1Stu.Add(s3);
-
-            C2Stu.Add(s1);
-            C2Stu.Add(s2);
-            C2Stu.Add(s3);
-
-            C3Stu.Add(s1);
-
-            //putting mini-lists in big lists (students per Course)
-            StudentPerCourse stuPerCour1 = new StudentPerCourse(c1, C1Stu);
-            StudentPerCourse stuPerCour2 = new StudentPerCourse(c2, C2Stu);
-            StudentPerCourse stuPerCour3 = new StudentPerCourse(c3, C3Stu);
-
-            StudentsPerCourse.Add(stuPerCour1);
-            StudentsPerCourse.Add(stuPerCour2);
-            StudentsPerCourse.Add(stuPerCour3);
-
-            //putting trainers in mini-lists (trainers per Course)
-            List<Trainer> C1Train = new List<Trainer>();
-            List<Trainer> C2Train = new List<Trainer>();
-            List<Trainer> C3Train = new List<Trainer>();
-
-            C1Train.Add(t1);
-            C1Train.Add(t2);
-
-            C2Train.Add(t1);
-            C2Train.Add(t3);
-
-            C3Train.Add(t4);
-            C3Train.Add(t1);
-
-            //putting mini-lists in big lists (trainers per Course)
-            TrainerPerCourse trainPerCour1 = new TrainerPerCourse(c1, C1Train);
-            TrainerPerCourse trainPerCour2 = new TrainerPerCourse(c2, C2Train);
-            TrainerPerCourse trainPerCour3 = new TrainerPerCourse(c3, C3Train);
-
-            TrainersPerCourse.Add(trainPerCour1);
-            TrainersPerCourse.Add(trainPerCour2);
-            TrainersPerCourse.Add(trainPerCour3);
-
-            //putting assignments in mini-lists (assignments per Course)
-            List<Assignment> C1Assign = new List<Assignment>();
-            List<Assignment> C2Assign = new List<Assignment>();
-            List<Assignment> C3Assign = new List<Assignment>();
-
-            C1Assign.Add(a1);
-            C1Assign.Add(a2);
-
-            C2Assign.Add(a3);
-
-            C3Assign.Add(a5);
-            C3Assign.Add(a4);
-
-            //putting mini-lists in big lists (assignments per Course)
-            AssignmentPerCourse assignPerCour1 = new AssignmentPerCourse(c1, C1Assign);
-            AssignmentPerCourse assignPerCour2 = new AssignmentPerCourse(c2, C2Assign);
-            AssignmentPerCourse assignPerCour3 = new AssignmentPerCourse(c3, C2Assign);
-
-            AssignmentsPerCourse.Add(assignPerCour1);
-            AssignmentsPerCourse.Add(assignPerCour2);
-            AssignmentsPerCourse.Add(assignPerCour3);
-
-            //putting assignments in mini-lists (assignments per Student)
-            List<Assignment> S1Assign = new List<Assignment>();
-            List<Assignment> S2Assign = new List<Assignment>();
-            List<Assignment> S3Assign = new List<Assignment>();
-
-            S1Assign.Add(a1);
-            S1Assign.Add(a2);
-
-            S2Assign.Add(a3);
-            S2Assign.Add(a4);
-            S2Assign.Add(a5);
-
-            S3Assign.Add(a6);
-
-            //putting mini-lists in big lists (assignments per Student)
-            AssignmentPerStudent assignPerStu1 = new AssignmentPerStudent(s1, S1Assign);
-            AssignmentPerStudent assignPerStu2 = new AssignmentPerStudent(s2, S2Assign);
-            AssignmentPerStudent assignPerStu3 = new AssignmentPerStudent(s3, S3Assign);
-
-            AssignmentsPerStudent.Add(assignPerStu1);
-            AssignmentsPerStudent.Add(assignPerStu2);
-            AssignmentsPerStudent.Add(assignPerStu3);
-
-            //putting courses in mini-lists (courses per Student)
-            List<Course> S1Cour = new List<Course>();
-            List<Course> S2Cour = new List<Course>();
-            List<Course> S3Cour = new List<Course>();
-
-            S1Cour.Add(c2);
-            S1Cour.Add(c3);
-
-
-            S2Cour.Add(c1);
-            S2Cour.Add(c2);
-
-            S3Cour.Add(c1);
-            S3Cour.Add(c2);
-
-            //putting mini-lists in big lists (courses per Student)
-            CoursePerStudent courPerStu1 = new CoursePerStudent(s1, S1Cour);
-            CoursePerStudent courPerStu2 = new CoursePerStudent(s2, S2Cour);
-            CoursePerStudent courPerStu3 = new CoursePerStudent(s3, S3Cour);
-
-
-            CoursesPerStudent.Add(courPerStu1);
-            CoursesPerStudent.Add(courPerStu2);
-            CoursesPerStudent.Add(courPerStu3);
-
-            //-------------------------------------------------------
-
-            //AssignmentCourseStudent ACS1 = new AssignmentCourseStudent(s1, c2, a3);
-            //AssignmentCourseStudent ACS2 = new AssignmentCourseStudent(s1, c3, a6);
-            //AssignmentCourseStudent ACS3 = new AssignmentCourseStudent(s2, c1, a1);
-            //AssignmentCourseStudent ACS4 = new AssignmentCourseStudent(s2, c2, a4);
-            //AssignmentCourseStudent ACS5 = new AssignmentCourseStudent(s3, c1, a2);
-            //AssignmentCourseStudent ACS6 = new AssignmentCourseStudent(s3, c2, a5);
-
-            //ACSList.Add(ACS1);
-            //ACSList.Add(ACS2);
-            //ACSList.Add(ACS3);
-            //ACSList.Add(ACS4);
-            //ACSList.Add(ACS5);
-            //ACSList.Add(ACS6);
-
 
         }
 
@@ -422,6 +209,21 @@ namespace schoolExercise
                 item.OutputCourse();
                 Console.WriteLine("===========================================================");
             }
+
+            //Console.WriteLine("Enter date yyyy-mm-dd : ");
+            //string givenDate = Console.ReadLine();
+
+            //if (DateTime.TryParse(givenDate, out DateTime correctDate))
+            //{
+
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Error: Date could not be parsed");
+            //    Console.WriteLine("Will put synthetic data");
+            //    correctDate = new DateTime(2020, 3, 25);
+            //}
+
         }
 
         public void PutStudentsInCourses()
@@ -484,187 +286,6 @@ namespace schoolExercise
             AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
 
             AssiStuCourIdList.Add(ascid);
-        }
-
-        public void PrintAllStudents()
-        {
-            // All students
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ALL Students");
-            Console.WriteLine();
-            foreach (var item in Students)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-
-        }
-
-        public void PrintAllCourses()
-        {
-            // All Courses
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("ALL Courses");
-            Console.WriteLine();
-            foreach (var item in Courses)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintAllTrainers()
-        {
-            // All trainers
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("ALL Trainers");
-            Console.WriteLine();
-            foreach (var item in Trainers)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-
-        }
-
-        public void PrintAllAssignments()
-        {
-            // All Assignments
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("ALL Assignments");
-            Console.WriteLine();
-            foreach (var item in Assignments)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintStudentsPerCourse()
-        {
-
-            //Students Per Course
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Students per Course");
-            Console.WriteLine();
-            foreach (var item in StudentsPerCourse)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintTrainersPerCourse()
-        {
-            //Trainers Per Course
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Trainers per Course");
-            Console.WriteLine();
-            foreach (var item in TrainersPerCourse)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintAssignmentsPerCourse()
-        {
-
-            //Assignments Per Course
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Assignments per Course");
-            Console.WriteLine();
-            foreach (var item in AssignmentsPerCourse)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintAssignmentsPerStudent()
-        {
-
-            //Assignments per student
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("Assignments per Student");
-            Console.WriteLine();
-            foreach (var item in AssignmentsPerStudent)
-            {
-                item.Output();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintMultipleEnrolledStudents()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("Students with more than 1 course");
-            Console.WriteLine();
-            foreach (var item in CoursesPerStudent)
-            {
-                item.PrintDuplicates();
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintStudentsWithDueDate()
-        {
-
-            Console.WriteLine("Enter date yyyy-mm-dd : ");
-            string givenDate = Console.ReadLine();
-            if (DateTime.TryParse(givenDate, out DateTime correctDate))
-            {
-
-            }
-            else
-            {
-                Console.WriteLine("Error: Date could not be parsed");
-                Console.WriteLine("Will put synthetic data");
-                correctDate = new DateTime(2020, 3, 25);
-            }
-
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("Students with due assignments during the week of " + correctDate.ToShortDateString() + ":");
-            foreach (var item in AssignmentsPerStudent)
-            {
-                item.StudentsDue(correctDate);
-                Console.WriteLine();
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
-        }
-
-        public void PrintACS()
-        {
-            string previous = null;
-
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine("All students in tree form");
-            Console.WriteLine();
-            foreach (var item in ACSList)
-            {
-                previous = item.Output(previous);
-            }
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("---------------");
         }
 
         public void MakeStudents()
@@ -1110,28 +731,6 @@ namespace schoolExercise
         }
     }
 
-    class StudentPerCourse
-    {
-        public Course Course { get; set; }
-
-
-        public StudentPerCourse(Course course, List<Student> students)
-        {
-            Course = course;
-
-            course.Students = students;
-        }
-
-        public void Output()
-        {
-            Console.WriteLine(Course.Title);
-            foreach (var item in Course.Students)
-            {
-                Console.WriteLine();
-                item.Output();
-            }
-        }
-    }
 
     class StuCourId
     {
@@ -1248,212 +847,6 @@ namespace schoolExercise
             Trainer.Output();
         }
 
-    }
-
-    class TrainerPerCourse
-    {
-        Course Course { get; set; }
-
-
-        public TrainerPerCourse(Course course, List<Trainer> trainers)
-        {
-            Course = course;
-
-            course.Trainers = trainers;
-        }
-
-        public void Output()
-        {
-            Console.WriteLine(Course.Title);
-            foreach (var item in Course.Trainers)
-            {
-                Console.WriteLine();
-                item.Output();
-            }
-        }
-    }
-
-    class AssignmentPerCourse
-    {
-        Course Course { get; set; }
-
-
-        public AssignmentPerCourse(Course course, List<Assignment> assignments)
-        {
-            Course = course;
-
-            course.Assignments = assignments;
-        }
-
-        public void Output()
-        {
-            Console.WriteLine(Course.Title);
-            foreach (var item in Course.Assignments)
-            {
-                Console.WriteLine();
-                item.Output();
-            }
-        }
-    }
-
-    class CoursePerStudent
-    {
-        Student Student { get; set; }
-
-        public CoursePerStudent(Student student, List<Course> courses)
-        {
-            Student = student;
-
-            student.Courses = courses;
-        }
-
-        public void PrintDuplicates()
-        {
-            string previous = null;
-            foreach (var item in Student.Courses)
-            {
-                if (previous != Student.FirstName)
-                {
-                    previous = Student.FirstName;
-                    Student.Output();
-                }
-
-            }
-        }
-
-        public void Output()
-        {
-            Console.WriteLine(Student.FirstName);
-            foreach (var item in Student.Courses)
-            {
-                Console.Write("\t");
-                item.Output();
-                foreach (var item2 in Student.Assignments)
-                {
-                    Console.Write("\t");
-                    item2.Output();
-                }
-            }
-        }
-    }
-
-    class AssignmentPerStudent
-    {
-        Student Student { get; set; }
-
-
-        public AssignmentPerStudent(Student student, List<Assignment> assignments)
-        {
-            Student = student;
-
-            student.Assignments = assignments;
-        }
-
-        public void Output()
-        {
-            Console.WriteLine(Student.FirstName + " " + Student.LastName);
-            foreach (var item in Student.Assignments)
-            {
-                Console.WriteLine();
-                item.Output();
-            }
-        }
-
-        public void StudentsDue(DateTime givenDate)
-        {
-
-            foreach (var item in Student.Assignments)
-            {
-                DateTime beginningOfTheWeek = new DateTime(1, 1, 1);
-                DateTime endOfTheWeek = new DateTime(1, 1, 1);
-
-                if (givenDate.DayOfWeek == DayOfWeek.Monday)
-                {
-                    beginningOfTheWeek = givenDate;
-                    endOfTheWeek = givenDate.AddDays(4);
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Tuesday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-1);
-                    endOfTheWeek = givenDate.AddDays(3);
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Wednesday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-2);
-                    endOfTheWeek = givenDate.AddDays(2);
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Thursday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-3);
-                    endOfTheWeek = givenDate.AddDays(1);
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Friday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-4);
-                    endOfTheWeek = givenDate;
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-5);
-                    endOfTheWeek = givenDate.AddDays(-1);
-                }
-                else if (givenDate.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    beginningOfTheWeek = givenDate.AddDays(-6);
-                    endOfTheWeek = givenDate.AddDays(-2);
-                }
-
-                if (beginningOfTheWeek <= item.SubDateTime && endOfTheWeek >= item.SubDateTime)
-                {
-                    Console.WriteLine(Student.FirstName);
-                    break;
-                }
-
-            }
-        }
-    }
-
-    class AssignmentCourseStudent
-    {
-        Student Student;
-
-        Course Course;
-
-        Assignment Assignment;
-
-        public AssignmentCourseStudent(Student student, Course course, Assignment assignment)
-        {
-            Student = student;
-            Course = course;
-            Assignment = assignment;
-
-            student.Courses.Add(course);
-            course.Students.Add(student);
-
-            student.Assignments.Add(assignment);
-            course.Assignments.Add(assignment);
-        }
-
-        public string Output(string previous)
-        {
-
-            if (previous != Student.FirstName)
-            {
-                Console.WriteLine(Student.FirstName);
-            }
-
-            Console.Write("\t");
-            Console.WriteLine(Course.Title);
-
-            foreach (var item in Course.Assignments)
-            {
-                Console.Write("\t\t");
-                item.OutputTitle();
-            }
-
-            return Student.FirstName;
-
-        }
     }
 
     class Services
