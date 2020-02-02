@@ -220,20 +220,18 @@ namespace schoolExercise
                 Console.WriteLine("===========================================================");
             }
 
-            //Console.WriteLine("Enter date yyyy-mm-dd : ");
-            //string givenDate = Console.ReadLine();
+            //A list of students that belong to more than one courses
+            var stuPerMultiCour = Services.GetAllStuPerMultiCour();
 
-            //if (DateTime.TryParse(givenDate, out DateTime correctDate))
-            //{
-
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Error: Date could not be parsed");
-            //    Console.WriteLine("Will put synthetic data");
-            //    correctDate = new DateTime(2020, 3, 25);
-            //}
-
+            foreach (var item in stuPerMultiCour)
+            {
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("Student ID: " + item.Student.StudentId + "  Course ID: " + item.Course.CourseId);
+                Console.WriteLine();
+                item.OutputStudent();
+                item.OutputCourse();
+                Console.WriteLine("===========================================================");
+            }
         }
 
         public void MakeStudents()
@@ -794,14 +792,14 @@ namespace schoolExercise
             Course = course;
         }
 
-        public void OutputCourse()
-        {
-            Course.Output();
-        }
-
         public void OutputStudent()
         {
             Student.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
         }
     }
 
@@ -823,14 +821,14 @@ namespace schoolExercise
             Assignment.Output();
         }
 
-        public void OutputCourse()
-        {
-            Course.Output();
-        }
-
         public void OutputStudent()
         {
             Student.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
         }
     }
 
@@ -845,14 +843,14 @@ namespace schoolExercise
             Course = course;
         }
 
-        public void OutputCourse()
-        {
-            Course.Output();
-        }
-
         public void OutputTrainer()
         {
             Trainer.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
         }
     }
 
@@ -904,6 +902,28 @@ namespace schoolExercise
         public void OutputStudent()
         {
             Student.Output();
+        }
+    }
+
+    class StuMultiCour
+    {
+        public Student Student { get; set; }
+        public Course Course { get; set; }
+
+        public StuMultiCour(Student student, Course course)
+        {
+            Student = student;
+            Course = course;
+        }
+
+        public void OutputStudent()
+        {
+            Student.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
         }
     }
 
@@ -1318,6 +1338,59 @@ namespace schoolExercise
             }
 
             return tempACS;
+        }
+
+        public static List<StuMultiCour> GetAllStuPerMultiCour()
+        {
+            List<StuMultiCour> tempSPMC = new List<StuMultiCour>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "";
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Student stu = new Student(
+                        Convert.ToInt32(reader["StudentId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        Convert.ToDateTime(reader["DateOfBirth"]),
+                        Convert.ToInt32(reader["TuitionFees"])
+                        );
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        StuMultiCour stumulticour = new StuMultiCour(stu, cour);
+                        tempSPMC.Add(stumulticour);
+                    }
+
+                    Console.WriteLine("Now showing Students with more than one Course: ");
+                    Console.WriteLine();
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
+            }
+            finally
+            {
+
+            }
+
+            return tempSPMC;
         }
 
         public static void InsertStudent(Student stu)
