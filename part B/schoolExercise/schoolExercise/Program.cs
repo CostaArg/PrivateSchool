@@ -195,18 +195,32 @@ namespace schoolExercise
                 Console.WriteLine("===========================================================");
             }
 
-            //A list of all the assignments per student per course
-            var assiPerStuPerCourList = Services.GetAllAssiPerStuPerCour();
+            //A list of all the assignments per course
+            var assiPerCourList = Services.GetAllAssiPerCour();
 
-            foreach (var item in assiPerStuPerCourList)
+            foreach (var item in assiPerCourList)
             {
                 Console.WriteLine("===========================================================");
-                Console.WriteLine("Assignment ID: " + item.Assignment.AssignmentId + " Student ID: " + 
-                    item.Student.StudentId + " Course ID: " + item.Course.CourseId);
+                Console.WriteLine("Assignment ID: " + item.Assignment.AssignmentId + "  Course ID: " + item.Course.CourseId);
                 Console.WriteLine();
                 item.OutputAssignment();
-                item.OutputStudent();
                 item.OutputCourse();
+                Console.WriteLine("===========================================================");
+
+            }
+
+            //A list of all the assignments per course per student
+            var assiPerCourPerStu = Services.GetAllAssiPerCourPerStu();
+
+            foreach (var item in assiPerCourPerStu)
+            {
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("Assignment ID: " + item.Assignment.AssignmentId + " Course ID: " + item.Course.CourseId +
+                    " Student ID: " + item.Student.StudentId);
+                Console.WriteLine();
+                item.OutputAssignment();
+                item.OutputCourse();
+                item.OutputStudent();
                 Console.WriteLine("===========================================================");
             }
 
@@ -224,68 +238,6 @@ namespace schoolExercise
             //    correctDate = new DateTime(2020, 3, 25);
             //}
 
-        }
-
-        public void PutStudentsInCourses()
-        {
-            Console.WriteLine("Enter student id: ");
-            int stuId = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
-
-            Student newStu = new Student();
-            Course newCour = new Course();
-
-            newStu.StudentId = stuId;
-            newCour.CourseId = courId;
-
-            StuCourId scid = new StuCourId(newStu.StudentId, newCour.CourseId);
-
-            StuCourIdList.Add(scid);
-        }
-
-        public void PutTrainersInCourses()
-        {
-            Console.WriteLine("Enter trainer id: ");
-            int trainId = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
-
-            Trainer newTrain = new Trainer();
-            Course newCour = new Course();
-
-            newTrain.TrainerId = trainId;
-            newCour.CourseId = courId;
-
-            TrainCourId tcid = new TrainCourId(newTrain.TrainerId, newCour.CourseId);
-
-            TrainCourIdList.Add(tcid);
-        }
-
-        public void PutAssignmentsInStudentsInCourses()
-        {
-            Console.WriteLine("Enter assignment id: ");
-            int assiId = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter student id: ");
-            int stuId = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
-
-            Assignment newAssi = new Assignment();
-            Student newStu = new Student();
-            Course newCour = new Course();
-
-            newAssi.AssignmentId = assiId;
-            newStu.StudentId = stuId;
-            newCour.CourseId = courId;
-
-            AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
-
-            AssiStuCourIdList.Add(ascid);
         }
 
         public void MakeStudents()
@@ -356,90 +308,6 @@ namespace schoolExercise
                 Console.WriteLine("Will put synthetic data");
                 newStu.TuitionFees = 1000;
             }
-
-        }
-
-        public void MakeCourses()
-        {
-            string flag;
-
-            do
-            {
-
-                do
-                {
-                    Console.WriteLine("Do you want to enter a new course? Y/N");
-                    flag = Console.ReadLine();
-                } while (flag != "Y" && flag != "N");
-
-                if (flag == "Y")
-                {
-                    MakeCourse();
-                }
-
-            } while (flag == "Y");
-
-        }
-
-        public void MakeCourse()
-        {
-            Course newCour = new Course();
-            Courses.Add(newCour);
-
-            Console.WriteLine("Enter course's title: ");
-            newCour.Title = Console.ReadLine();
-
-            if (newCour.Title.Length < 1)
-            {
-                Console.WriteLine("Title was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Title = "HTML";
-            }
-
-            Console.WriteLine("Enter course's stream: ");
-            newCour.Stream = Console.ReadLine();
-
-            if (newCour.Stream.Length < 1)
-            {
-                Console.WriteLine("Stream was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Stream = "Web Development";
-            }
-
-            Console.WriteLine("Enter course's type: ");
-            newCour.Type = Console.ReadLine();
-
-            if (newCour.Type.Length < 1)
-            {
-                Console.WriteLine("Type was left empty");
-                Console.WriteLine("Will put synthetic data");
-                newCour.Type = "Practical Subject";
-            }
-
-            try
-            {
-                Console.WriteLine("Enter course's start date: ");
-                newCour.StartDate = Convert.ToDateTime(Console.ReadLine());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.WriteLine("Will put synthetic data");
-                newCour.StartDate = new DateTime(2020, 5, 10);
-            }
-
-            try
-            {
-                Console.WriteLine("Enter course's end date: ");
-                newCour.EndDate = Convert.ToDateTime(Console.ReadLine());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.WriteLine("Will put synthetic data");
-                newCour.EndDate = new DateTime(2020, 11, 22);
-            }
-
         }
 
         public void MakeTrainers()
@@ -448,7 +316,6 @@ namespace schoolExercise
 
             do
             {
-
                 do
                 {
                     Console.WriteLine("Do you want to enter a new trainer? Y/N");
@@ -497,7 +364,6 @@ namespace schoolExercise
                 Console.WriteLine("Will put synthetic data");
                 newTrain.Subject = "UNIX Systems";
             }
-
         }
 
         public void MakeAssignments()
@@ -506,7 +372,6 @@ namespace schoolExercise
 
             do
             {
-
                 do
                 {
                     Console.WriteLine("Do you want to enter a new assignment? Y/N");
@@ -581,7 +446,149 @@ namespace schoolExercise
                 Console.WriteLine("Will put synthetic data");
                 newAssign.TotalMark = 100;
             }
+        }
 
+        public void MakeCourses()
+        {
+            string flag;
+
+            do
+            {
+                do
+                {
+                    Console.WriteLine("Do you want to enter a new course? Y/N");
+                    flag = Console.ReadLine();
+                } while (flag != "Y" && flag != "N");
+
+                if (flag == "Y")
+                {
+                    MakeCourse();
+                }
+
+            } while (flag == "Y");
+        }
+
+        public void MakeCourse()
+        {
+            Course newCour = new Course();
+            Courses.Add(newCour);
+
+            Console.WriteLine("Enter course's title: ");
+            newCour.Title = Console.ReadLine();
+
+            if (newCour.Title.Length < 1)
+            {
+                Console.WriteLine("Title was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Title = "HTML";
+            }
+
+            Console.WriteLine("Enter course's stream: ");
+            newCour.Stream = Console.ReadLine();
+
+            if (newCour.Stream.Length < 1)
+            {
+                Console.WriteLine("Stream was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Stream = "Web Development";
+            }
+
+            Console.WriteLine("Enter course's type: ");
+            newCour.Type = Console.ReadLine();
+
+            if (newCour.Type.Length < 1)
+            {
+                Console.WriteLine("Type was left empty");
+                Console.WriteLine("Will put synthetic data");
+                newCour.Type = "Practical Subject";
+            }
+
+            try
+            {
+                Console.WriteLine("Enter course's start date: ");
+                newCour.StartDate = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Will put synthetic data");
+                newCour.StartDate = new DateTime(2020, 5, 10);
+            }
+
+            try
+            {
+                Console.WriteLine("Enter course's end date: ");
+                newCour.EndDate = Convert.ToDateTime(Console.ReadLine());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                Console.WriteLine("Will put synthetic data");
+                newCour.EndDate = new DateTime(2020, 11, 22);
+            }
+        }
+
+
+        public void PutStudentsInCourses()
+        {
+            Console.WriteLine("Enter student id: ");
+            int stuId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
+
+            Student newStu = new Student();
+            Course newCour = new Course();
+
+            newStu.StudentId = stuId;
+            newCour.CourseId = courId;
+
+            StuCourId scid = new StuCourId(newStu.StudentId, newCour.CourseId);
+
+            StuCourIdList.Add(scid);
+        }
+
+        public void PutTrainersInCourses()
+        {
+            Console.WriteLine("Enter trainer id: ");
+            int trainId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
+
+            Trainer newTrain = new Trainer();
+            Course newCour = new Course();
+
+            newTrain.TrainerId = trainId;
+            newCour.CourseId = courId;
+
+            TrainCourId tcid = new TrainCourId(newTrain.TrainerId, newCour.CourseId);
+
+            TrainCourIdList.Add(tcid);
+        }
+
+        public void PutAssignmentsInStudentsInCourses()
+        {
+            Console.WriteLine("Enter assignment id: ");
+            int assiId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter student id: ");
+            int stuId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
+
+            Assignment newAssi = new Assignment();
+            Student newStu = new Student();
+            Course newCour = new Course();
+
+            newAssi.AssignmentId = assiId;
+            newStu.StudentId = stuId;
+            newCour.CourseId = courId;
+
+            AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
+
+            AssiStuCourIdList.Add(ascid);
         }
 
     }
@@ -593,8 +600,6 @@ namespace schoolExercise
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int TuitionFees { get; set; }
-        public List<Assignment> Assignments { get; set; }
-        public List<Course> Courses { get; set; }
 
         public Student()
         {
@@ -629,9 +634,6 @@ namespace schoolExercise
         public string Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<Assignment> Assignments { get; set; }
-        public List<Student> Students { get; set; }
-        public List<Trainer> Trainers { get; set; }
 
         public Course()
         {
@@ -849,6 +851,60 @@ namespace schoolExercise
 
     }
 
+    class AssiCour
+    {
+        public Assignment Assignment { get; set; }
+        public Course Course { get; set; }
+
+        public AssiCour(Assignment assignment, Course course)
+        {
+            Assignment = assignment;
+            Course = course;
+        }
+
+        public void OutputAssignment()
+        {
+            Assignment.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
+        }
+
+    }
+
+    class AssiCourStu
+    {
+        public Assignment Assignment { get; set; }
+        public Course Course { get; set; }
+        public Student Student { get; set; }
+
+        public AssiCourStu(Assignment assignment, Course course, Student student)
+        {
+            Assignment = assignment;
+            Course = course;
+            Student = student;
+        }
+
+        public void OutputAssignment()
+        {
+            Assignment.Output();
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
+        }
+
+        public void OutputStudent()
+        {
+            Student.Output();
+        }
+
+    }
+
+
     class Services
     {
         public static string conString = ConfigurationManager.ConnectionStrings["schoolConnection"].ConnectionString;
@@ -896,50 +952,6 @@ namespace schoolExercise
 
         }
 
-        public static List<Course> GetAllCourses()
-        {
-            List<Course> tempCours = new List<Course>();
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(conString))
-                {
-                    string querystring = "Select * from Course";
-                    con.Open();
-                    SqlCommand cmd = new SqlCommand(querystring, con);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        Course cour = new Course(
-                        Convert.ToInt32(reader["CourseId"]),
-                        reader["Title"].ToString(),
-                        reader["Stream"].ToString(),
-                        reader["Type"].ToString(),
-                        Convert.ToDateTime(reader["StartDate"]),
-                        Convert.ToDateTime(reader["EndDate"])
-                        );
-                        tempCours.Add(cour);
-                    }
-
-                    Console.WriteLine("Reading courses from database was successful!");
-                    Console.WriteLine();
-                }
-            }
-
-            catch (SqlException ex)
-            {
-                Console.WriteLine("Error in the database " + ex.Message);
-            }
-            finally
-            {
-
-            }
-
-            return tempCours;
-
-        }
-
         public static List<Trainer> GetAllTrainers()
         {
             List<Trainer> tempTrains = new List<Trainer>();
@@ -984,7 +996,7 @@ namespace schoolExercise
 
         public static List<Assignment> GetAllAssignments()
         {
-            List<Assignment> tempAssign = new List<Assignment>();
+            List<Assignment> tempAssi = new List<Assignment>();
 
             try
             {
@@ -997,7 +1009,7 @@ namespace schoolExercise
 
                     while (reader.Read())
                     {
-                        Assignment assign = new Assignment(
+                        Assignment assi = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
                         reader["Title"].ToString(),
                         reader["Description"].ToString(),
@@ -1005,7 +1017,7 @@ namespace schoolExercise
                         Convert.ToDouble(reader["OralMark"]),
                         Convert.ToDouble(reader["TotalMark"])
                         );
-                        tempAssign.Add(assign);
+                        tempAssi.Add(assi);
                     }
 
                     Console.WriteLine("Reading assignments from database was successful");
@@ -1022,7 +1034,51 @@ namespace schoolExercise
 
             }
 
-            return tempAssign;
+            return tempAssi;
+
+        }
+
+        public static List<Course> GetAllCourses()
+        {
+            List<Course> tempCours = new List<Course>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "Select * from Course";
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        tempCours.Add(cour);
+                    }
+
+                    Console.WriteLine("Reading courses from database was successful!");
+                    Console.WriteLine();
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempCours;
 
         }
 
@@ -1138,21 +1194,15 @@ namespace schoolExercise
 
         }
 
-        public static List<AssiStuCour> GetAllAssiPerStuPerCour()
+        public static List<AssiCour> GetAllAssiPerCour()
         {
-            List<AssiStuCour> tempASC = new List<AssiStuCour>();
+            List<AssiCour> tempAPC = new List<AssiCour>();
 
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    string querystring = "SELECT assignment.assignmentid, student.studentid, course.courseid, " +
-                        "assignment.description, assignment.subdatetime, assignment.oralmark, assignment.totalmark, " +
-                        "student.firstname, student.lastname, Student.dateofbirth, student.tuitionfees, course.title, " +
-                        "course.stream, course.type, course.startdate, course.enddate FROM(((assignmentPerStudentPerCourse " +
-                        "INNER JOIN Assignment ON assignmentPerStudentPerCourse.assignmentid = Assignment.assignmentid) INNER JOIN " +
-                        "Student ON assignmentPerStudentPerCourse.studentid = Student.studentid) INNER JOIN Course ON " +
-                        "assignmentPerStudentPerCourse.courseid = Course.courseid); ";
+                    string querystring = "";
 
                     con.Open();
                     SqlCommand cmd = new SqlCommand(querystring, con);
@@ -1160,20 +1210,13 @@ namespace schoolExercise
 
                     while (reader.Read())
                     {
-                        Assignment assign = new Assignment(
+                        Assignment assi = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
                         reader["Title"].ToString(),
                         reader["Description"].ToString(),
                         Convert.ToDateTime(reader["SubDateTime"]),
                         Convert.ToDouble(reader["OralMark"]),
                         Convert.ToDouble(reader["TotalMark"])
-                        );
-                        Student stu = new Student(
-                        Convert.ToInt32(reader["StudentId"]),
-                        reader["FirstName"].ToString(),
-                        reader["LastName"].ToString(),
-                        Convert.ToDateTime(reader["DateOfBirth"]),
-                        Convert.ToInt32(reader["TuitionFees"])
                         );
                         Course cour = new Course(
                         Convert.ToInt32(reader["CourseId"]),
@@ -1183,11 +1226,11 @@ namespace schoolExercise
                         Convert.ToDateTime(reader["StartDate"]),
                         Convert.ToDateTime(reader["EndDate"])
                         );
-                        AssiStuCour assistucour = new AssiStuCour(assign, stu, cour);
-                        tempASC.Add(assistucour);
+                        AssiCour assicour = new AssiCour(assi, cour);
+                        tempAPC.Add(assicour);
                     }
 
-                    Console.WriteLine("Reading assignments per student per course from database was successful");
+                    Console.WriteLine("Reading assignment per course from database was successful!");
                     Console.WriteLine();
                 }
             }
@@ -1201,40 +1244,69 @@ namespace schoolExercise
 
             }
 
-            return tempASC;
+            return tempAPC;
 
         }
 
-        public static void InsertCourse(Course cour)
+        public static List<AssiCourStu> GetAllAssiPerCourPerStu()
         {
-            SqlConnection con = new SqlConnection(conString);
-
-            string query = "INSERT INTO Course (title, stream, type, startdate, enddate) VALUES(@title, @stream, @type, @startdate, @enddate)";
-
-            SqlCommand sqlCommand = new SqlCommand(query, con);
-
-            sqlCommand.Parameters.AddWithValue("@title", cour.Title);
-            sqlCommand.Parameters.AddWithValue("@stream", cour.Stream);
-            sqlCommand.Parameters.AddWithValue("@type", cour.Type);
-            sqlCommand.Parameters.AddWithValue("@startDate", cour.StartDate);
-            sqlCommand.Parameters.AddWithValue("@endDate", cour.EndDate);
-
+            List<AssiCourStu> tempACS = new List<AssiCourStu>();
 
             try
             {
-                con.Open();
-                sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Courses inserted successfully");
-                Console.WriteLine();
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "";
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Assignment assi = new Assignment(
+                        Convert.ToInt32(reader["AssignmentId"]),
+                        reader["Title"].ToString(),
+                        reader["Description"].ToString(),
+                        Convert.ToDateTime(reader["SubDateTime"]),
+                        Convert.ToDouble(reader["OralMark"]),
+                        Convert.ToDouble(reader["TotalMark"])
+                        );
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        Student stu = new Student(
+                        Convert.ToInt32(reader["StudentId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        Convert.ToDateTime(reader["DateOfBirth"]),
+                        Convert.ToInt32(reader["TuitionFees"])
+                        );
+                        AssiCourStu assicourstu = new AssiCourStu(assi, cour, stu);
+                        tempACS.Add(assicourstu);
+                    }
+
+                    Console.WriteLine("Reading assignments per course per student from database was successful");
+                    Console.WriteLine();
+                }
             }
-            catch (Exception ex)
+
+            catch (SqlException ex)
             {
-                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine("Error in the database " + ex.Message);
             }
             finally
             {
-                con.Close();
+
             }
+
+            return tempACS;
+
         }
 
         public static void InsertStudent(Student stu)
@@ -1318,6 +1390,38 @@ namespace schoolExercise
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
                 Console.WriteLine("Assignments inserted successfully");
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertCourse(Course cour)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO Course (title, stream, type, startdate, enddate) VALUES(@title, @stream, @type, @startdate, @enddate)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@title", cour.Title);
+            sqlCommand.Parameters.AddWithValue("@stream", cour.Stream);
+            sqlCommand.Parameters.AddWithValue("@type", cour.Type);
+            sqlCommand.Parameters.AddWithValue("@startDate", cour.StartDate);
+            sqlCommand.Parameters.AddWithValue("@endDate", cour.EndDate);
+
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Courses inserted successfully");
                 Console.WriteLine();
             }
             catch (Exception ex)
