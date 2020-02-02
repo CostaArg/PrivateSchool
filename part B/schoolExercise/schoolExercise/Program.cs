@@ -36,19 +36,8 @@ namespace schoolExercise
                     {
                         Services.InsertStudent(item);
                     }
-
                 }
                 else if (option == "3")
-                {
-                    data.MakeCourses();
-
-                    foreach (var item in data.Courses)
-                    {
-                        Services.InsertCourse(item);
-                    }
-
-                }
-                else if (option == "4")
                 {
                     data.MakeTrainers();
 
@@ -56,9 +45,8 @@ namespace schoolExercise
                     {
                         Services.InsertTrainer(item);
                     }
-
                 }
-                else if (option == "5")
+                else if (option == "4")
                 {
                     data.MakeAssignments();
 
@@ -66,7 +54,15 @@ namespace schoolExercise
                     {
                         Services.InsertAssignment(item);
                     }
+                }
+                else if (option == "5")
+                {
+                    data.MakeCourses();
 
+                    foreach (var item in data.Courses)
+                    {
+                        Services.InsertCourse(item);
+                    }
                 }
                 else if (option == "6")
                 {
@@ -107,9 +103,9 @@ namespace schoolExercise
             Console.WriteLine("Select an option or enter STOP to exit:");
             Console.WriteLine("1. Print Information");
             Console.WriteLine("2. Insert Student");
-            Console.WriteLine("3. Insert Course");
-            Console.WriteLine("4. Insert Trainer");
-            Console.WriteLine("5. Insert Assignment");
+            Console.WriteLine("3. Insert Trainer");
+            Console.WriteLine("4. Insert Assignment");
+            Console.WriteLine("5. Insert Course");
             Console.WriteLine("6. Insert Student Per Course");
             Console.WriteLine("7. Insert Trainer Per Course");
             Console.WriteLine("8. Insert Assignment Per Student Per Course");
@@ -392,13 +388,13 @@ namespace schoolExercise
             Assignments.Add(newAssign);
 
             Console.WriteLine("Enter assignment's title: ");
-            newAssign.Title = Console.ReadLine();
+            newAssign.TitleAssi = Console.ReadLine();
 
-            if (newAssign.Title.Length < 1)
+            if (newAssign.TitleAssi.Length < 1)
             {
                 Console.WriteLine("Title was left empty");
                 Console.WriteLine("Will put synthetic data");
-                newAssign.Title = "Project Chat";
+                newAssign.TitleAssi = "Project Chat";
             }
 
             Console.WriteLine("Enter assignment's description: ");
@@ -695,7 +691,7 @@ namespace schoolExercise
     class Assignment
     {
         public int AssignmentId { get; set; }
-        public string Title { get; set; }
+        public string TitleAssi { get; set; }
         public string Description { get; set; }
         public DateTime SubDateTime { get; set; }
         public double OralMark { get; set; }
@@ -706,10 +702,10 @@ namespace schoolExercise
 
         }
 
-        public Assignment(int assignmentid, string title, string description, DateTime subdatetime, double oralmark, double totalmark)
+        public Assignment(int assignmentid, string titleassi, string description, DateTime subdatetime, double oralmark, double totalmark)
         {
             AssignmentId = assignmentid;
-            Title = title;
+            TitleAssi = titleassi;
             Description = description;
             SubDateTime = subdatetime;
             OralMark = oralmark;
@@ -718,19 +714,15 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine("-------------");
-            Console.WriteLine("Title:       " + Title);
-            Console.WriteLine("Description: " + Description);
-            Console.WriteLine("SubDateTime: " + SubDateTime.ToShortDateString());
-            Console.WriteLine("OralMark:    " + OralMark);
-            Console.WriteLine("TotalMark:   " + TotalMark);
-            Console.WriteLine("-------------");
+            Console.WriteLine("--------------");
+            Console.WriteLine("Title:         " + TitleAssi);
+            Console.WriteLine("Description:   " + Description);
+            Console.WriteLine("SubDateTime:   " + SubDateTime.ToShortDateString());
+            Console.WriteLine("OralMark:      " + OralMark);
+            Console.WriteLine("TotalMark:     " + TotalMark);
+            Console.WriteLine("--------------");
         }
 
-        public void OutputTitle()
-        {
-            Console.WriteLine(Title);
-        }
     }
 
 
@@ -934,7 +926,7 @@ namespace schoolExercise
                         tempStus.Add(stu);
                     }
 
-                    Console.WriteLine("Reading students from database was successful!");
+                    Console.WriteLine("Now showing Students: ");
                     Console.WriteLine();
                 }
             }
@@ -976,7 +968,7 @@ namespace schoolExercise
                         tempTrains.Add(train);
                     }
 
-                    Console.WriteLine("Reading trainers from database was successful!");
+                    Console.WriteLine("Now showing Trainers: ");
                     Console.WriteLine();
                 }
             }
@@ -1011,7 +1003,7 @@ namespace schoolExercise
                     {
                         Assignment assi = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
-                        reader["Title"].ToString(),
+                        reader["TitleAssi"].ToString(),
                         reader["Description"].ToString(),
                         Convert.ToDateTime(reader["SubDateTime"]),
                         Convert.ToDouble(reader["OralMark"]),
@@ -1020,7 +1012,7 @@ namespace schoolExercise
                         tempAssi.Add(assi);
                     }
 
-                    Console.WriteLine("Reading assignments from database was successful");
+                    Console.WriteLine("Now showing Assignments: ");
                     Console.WriteLine();
                 }
             }
@@ -1064,7 +1056,7 @@ namespace schoolExercise
                         tempCours.Add(cour);
                     }
 
-                    Console.WriteLine("Reading courses from database was successful!");
+                    Console.WriteLine("Now showing Courses: ");
                     Console.WriteLine();
                 }
             }
@@ -1121,7 +1113,7 @@ namespace schoolExercise
                         tempSPC.Add(stucour);
                     }
 
-                    Console.WriteLine("Reading students per course from database was successful!");
+                    Console.WriteLine("Now showing Students per Course: ");
                     Console.WriteLine();
                 }
             }
@@ -1176,7 +1168,7 @@ namespace schoolExercise
                         tempTPC.Add(traincour);
                     }
 
-                    Console.WriteLine("Reading trainer per course from database was successful!");
+                    Console.WriteLine("Now showing Trainers per Course: ");
                     Console.WriteLine();
                 }
             }
@@ -1202,7 +1194,10 @@ namespace schoolExercise
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    string querystring = "";
+                    string querystring = "SELECT assignment.assignmentid, course.courseid, assignment.titleassi, assignment.description, assignment.subdatetime, " +
+                        "assignment.oralmark, assignment.totalmark, course.title, course.stream, course.type, course.startdate, " +
+                        "course.enddate FROM((assignmentPerCourse INNER JOIN Assignment ON assignmentPerCourse.assignmentid " +
+                        "= Assignment.assignmentid) INNER JOIN Course ON assignmentPerCourse.courseid = Course.courseid); ";
 
                     con.Open();
                     SqlCommand cmd = new SqlCommand(querystring, con);
@@ -1212,7 +1207,7 @@ namespace schoolExercise
                     {
                         Assignment assi = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
-                        reader["Title"].ToString(),
+                        reader["TitleAssi"].ToString(),
                         reader["Description"].ToString(),
                         Convert.ToDateTime(reader["SubDateTime"]),
                         Convert.ToDouble(reader["OralMark"]),
@@ -1230,7 +1225,7 @@ namespace schoolExercise
                         tempAPC.Add(assicour);
                     }
 
-                    Console.WriteLine("Reading assignment per course from database was successful!");
+                    Console.WriteLine("Now showing Assignments per Course: ");
                     Console.WriteLine();
                 }
             }
@@ -1256,7 +1251,13 @@ namespace schoolExercise
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    string querystring = "";
+                    string querystring = "SELECT assignment.assignmentid, course.courseid, student.studentid, assignment.titleassi, " +
+                        "assignment.description, assignment.subdatetime, assignment.oralmark, assignment.totalmark, course.title, " +
+                        "course.stream, course.type, course.startdate, course.enddate, student.firstname, student.lastname, " +
+                        "Student.dateofbirth, student.tuitionfees FROM(((assignmentPerCoursePerStudent INNER JOIN Assignment " +
+                        "ON assignmentPerCoursePerStudent.assignmentid = Assignment.assignmentid) INNER JOIN Course ON " +
+                        "assignmentPerCoursePerStudent.courseid = Course.courseid) INNER JOIN Student ON " +
+                        "assignmentPerCoursePerStudent.studentid = Student.studentid); ";
 
                     con.Open();
                     SqlCommand cmd = new SqlCommand(querystring, con);
@@ -1266,7 +1267,7 @@ namespace schoolExercise
                     {
                         Assignment assi = new Assignment(
                         Convert.ToInt32(reader["AssignmentId"]),
-                        reader["Title"].ToString(),
+                        reader["TitleAssi"].ToString(),
                         reader["Description"].ToString(),
                         Convert.ToDateTime(reader["SubDateTime"]),
                         Convert.ToDouble(reader["OralMark"]),
@@ -1291,7 +1292,7 @@ namespace schoolExercise
                         tempACS.Add(assicourstu);
                     }
 
-                    Console.WriteLine("Reading assignments per course per student from database was successful");
+                    Console.WriteLine("Now showing Assignments per Course per Student: ");
                     Console.WriteLine();
                 }
             }
@@ -1374,11 +1375,11 @@ namespace schoolExercise
         {
             SqlConnection con = new SqlConnection(conString);
 
-            string query = "INSERT INTO Assignment (title, description, subdatetime, oralmark, totalmark) VALUES(@title, @description, @subdatetime, @oralmark, @totalmark)";
+            string query = "INSERT INTO Assignment (titleassi, description, subdatetime, oralmark, totalmark) VALUES(@titleassi, @description, @subdatetime, @oralmark, @totalmark)";
 
             SqlCommand sqlCommand = new SqlCommand(query, con);
 
-            sqlCommand.Parameters.AddWithValue("@title", assi.Title);
+            sqlCommand.Parameters.AddWithValue("@titleassi", assi.TitleAssi);
             sqlCommand.Parameters.AddWithValue("@description", assi.Description);
             sqlCommand.Parameters.AddWithValue("@subdatetime", assi.SubDateTime);
             sqlCommand.Parameters.AddWithValue("@oralmark", assi.OralMark);
