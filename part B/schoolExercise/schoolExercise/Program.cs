@@ -527,64 +527,87 @@ namespace schoolExercise
 
         public void PutStudentsInCourses()
         {
-            Console.WriteLine("Enter student id: ");
-            int stuId = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                Console.WriteLine("Enter student id: ");
+                int stuId = Convert.ToInt32(Console.ReadLine());
 
-            Student newStu = new Student();
-            Course newCour = new Course();
+                Console.WriteLine("Enter course id: ");
+                int courId = Convert.ToInt32(Console.ReadLine());
 
-            newStu.StudentId = stuId;
-            newCour.CourseId = courId;
+                Student newStu = new Student();
+                Course newCour = new Course();
 
-            StuCourId scid = new StuCourId(newStu.StudentId, newCour.CourseId);
+                newStu.StudentId = stuId;
+                newCour.CourseId = courId;
 
-            StuCourIdList.Add(scid);
+                StuCourId scid = new StuCourId(newStu.StudentId, newCour.CourseId);
+
+                StuCourIdList.Add(scid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
         }
 
         public void PutTrainersInCourses()
         {
-            Console.WriteLine("Enter trainer id: ");
-            int trainId = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                Console.WriteLine("Enter trainer id: ");
+                int trainId = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter course id: ");
+                int courId = Convert.ToInt32(Console.ReadLine());
 
-            Trainer newTrain = new Trainer();
-            Course newCour = new Course();
+                Trainer newTrain = new Trainer();
+                Course newCour = new Course();
 
-            newTrain.TrainerId = trainId;
-            newCour.CourseId = courId;
+                newTrain.TrainerId = trainId;
+                newCour.CourseId = courId;
 
-            TrainCourId tcid = new TrainCourId(newTrain.TrainerId, newCour.CourseId);
+                TrainCourId tcid = new TrainCourId(newTrain.TrainerId, newCour.CourseId);
 
-            TrainCourIdList.Add(tcid);
+                TrainCourIdList.Add(tcid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
         public void PutAssignmentsInStudentsInCourses()
         {
-            Console.WriteLine("Enter assignment id: ");
-            int assiId = Convert.ToInt32(Console.ReadLine());
+            try
+            {
+                Console.WriteLine("Enter assignment id: ");
+                int assiId = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter student id: ");
-            int stuId = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter student id: ");
+                int stuId = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Enter course id: ");
-            int courId = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter course id: ");
+                int courId = Convert.ToInt32(Console.ReadLine());
 
-            Assignment newAssi = new Assignment();
-            Student newStu = new Student();
-            Course newCour = new Course();
+                Assignment newAssi = new Assignment();
+                Student newStu = new Student();
+                Course newCour = new Course();
 
-            newAssi.AssignmentId = assiId;
-            newStu.StudentId = stuId;
-            newCour.CourseId = courId;
+                newAssi.AssignmentId = assiId;
+                newStu.StudentId = stuId;
+                newCour.CourseId = courId;
 
-            AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
+                AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
 
-            AssiStuCourIdList.Add(ascid);
+                AssiStuCourIdList.Add(ascid);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
     }
