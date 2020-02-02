@@ -524,10 +524,8 @@ namespace schoolExercise
             }
         }
 
-
         public void PutStudentsInCourses()
         {
-
             try
             {
                 Console.WriteLine("Enter student id: ");
@@ -550,7 +548,6 @@ namespace schoolExercise
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
-
         }
 
         public void PutTrainersInCourses()
@@ -748,7 +745,6 @@ namespace schoolExercise
 
     }
 
-
     class StuCourId
     {
         public int StudentId { get; set; }
@@ -759,7 +755,6 @@ namespace schoolExercise
             StudentId = studentId;
             CourseId = courseId;
         }
-
     }
 
     class AssiStuCourId
@@ -774,7 +769,6 @@ namespace schoolExercise
             StudentId = studentId;
             CourseId = courseId;
         }
-
     }
 
     class TrainCourId
@@ -787,7 +781,6 @@ namespace schoolExercise
             TrainerId = trainerId;
             CourseId = courseId;
         }
-
     }
 
     class StuCour
@@ -810,7 +803,6 @@ namespace schoolExercise
         {
             Student.Output();
         }
-
     }
 
     class AssiStuCour
@@ -840,7 +832,6 @@ namespace schoolExercise
         {
             Student.Output();
         }
-
     }
 
     class TrainCour
@@ -863,7 +854,6 @@ namespace schoolExercise
         {
             Trainer.Output();
         }
-
     }
 
     class AssiCour
@@ -886,7 +876,6 @@ namespace schoolExercise
         {
             Course.Output();
         }
-
     }
 
     class AssiCourStu
@@ -916,9 +905,7 @@ namespace schoolExercise
         {
             Student.Output();
         }
-
     }
-
 
     class Services
     {
@@ -957,6 +944,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -964,7 +952,6 @@ namespace schoolExercise
             }
 
             return tempStus;
-
         }
 
         public static List<Trainer> GetAllTrainers()
@@ -999,6 +986,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1006,7 +994,6 @@ namespace schoolExercise
             }
 
             return tempTrains;
-
         }
 
         public static List<Assignment> GetAllAssignments()
@@ -1043,6 +1030,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1050,7 +1038,6 @@ namespace schoolExercise
             }
 
             return tempAssi;
-
         }
 
         public static List<Course> GetAllCourses()
@@ -1087,6 +1074,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1094,7 +1082,6 @@ namespace schoolExercise
             }
 
             return tempCours;
-
         }
 
         public static List<StuCour> GetAllStuPerCour()
@@ -1144,6 +1131,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1151,7 +1139,6 @@ namespace schoolExercise
             }
 
             return tempSPC;
-
         }
 
         public static List<TrainCour> GetAllTrainPerCour()
@@ -1199,6 +1186,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1206,7 +1194,6 @@ namespace schoolExercise
             }
 
             return tempTPC;
-
         }
 
         public static List<AssiCour> GetAllAssiPerCour()
@@ -1256,6 +1243,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1263,7 +1251,6 @@ namespace schoolExercise
             }
 
             return tempAPC;
-
         }
 
         public static List<AssiCourStu> GetAllAssiPerCourPerStu()
@@ -1323,6 +1310,7 @@ namespace schoolExercise
             catch (SqlException ex)
             {
                 Console.WriteLine("Error in the database " + ex.Message);
+                Console.WriteLine();
             }
             finally
             {
@@ -1330,14 +1318,14 @@ namespace schoolExercise
             }
 
             return tempACS;
-
         }
 
         public static void InsertStudent(Student stu)
         {
             SqlConnection con = new SqlConnection(conString);
 
-            string query = "INSERT INTO Student (firstname, lastname, dateofbirth, tuitionfees) VALUES(@firstname, @lastname, @dateofbirth, @tuitionfees)";
+            string query = "INSERT INTO Student (firstname, lastname, dateofbirth, tuitionfees) " +
+                "VALUES(@firstname, @lastname, @dateofbirth, @tuitionfees)";
 
             SqlCommand sqlCommand = new SqlCommand(query, con);
 
@@ -1345,7 +1333,6 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@lastname", stu.LastName);
             sqlCommand.Parameters.AddWithValue("@dateofbirth", stu.DateOfBirth);
             sqlCommand.Parameters.AddWithValue("@tuitionfees", stu.TuitionFees);
-
 
             try
             {
@@ -1357,6 +1344,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1376,7 +1364,6 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@lastname", train.LastName);
             sqlCommand.Parameters.AddWithValue("@subject", train.Subject);
 
-
             try
             {
                 con.Open();
@@ -1387,6 +1374,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1398,7 +1386,8 @@ namespace schoolExercise
         {
             SqlConnection con = new SqlConnection(conString);
 
-            string query = "INSERT INTO Assignment (titleassi, description, subdatetime, oralmark, totalmark) VALUES(@titleassi, @description, @subdatetime, @oralmark, @totalmark)";
+            string query = "INSERT INTO Assignment (titleassi, description, subdatetime, oralmark, totalmark) " +
+                "VALUES(@titleassi, @description, @subdatetime, @oralmark, @totalmark)";
 
             SqlCommand sqlCommand = new SqlCommand(query, con);
 
@@ -1407,7 +1396,6 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@subdatetime", assi.SubDateTime);
             sqlCommand.Parameters.AddWithValue("@oralmark", assi.OralMark);
             sqlCommand.Parameters.AddWithValue("@totalmark", assi.TotalMark);
-
 
             try
             {
@@ -1419,6 +1407,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1430,7 +1419,8 @@ namespace schoolExercise
         {
             SqlConnection con = new SqlConnection(conString);
 
-            string query = "INSERT INTO Course (title, stream, type, startdate, enddate) VALUES(@title, @stream, @type, @startdate, @enddate)";
+            string query = "INSERT INTO Course (title, stream, type, startdate, enddate) VALUES(@title, @stream, @type, " +
+                "@startdate, @enddate)";
 
             SqlCommand sqlCommand = new SqlCommand(query, con);
 
@@ -1439,7 +1429,6 @@ namespace schoolExercise
             sqlCommand.Parameters.AddWithValue("@type", cour.Type);
             sqlCommand.Parameters.AddWithValue("@startDate", cour.StartDate);
             sqlCommand.Parameters.AddWithValue("@endDate", cour.EndDate);
-
 
             try
             {
@@ -1451,6 +1440,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1479,6 +1469,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1507,6 +1498,7 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
@@ -1518,7 +1510,8 @@ namespace schoolExercise
         {
             SqlConnection con = new SqlConnection(conString);
 
-            string query = "INSERT INTO assignmentPerStudentPerCourse (assignmentid, studentid, courseid) VALUES(@assignmentid, @studentid, @courseid)";
+            string query = "INSERT INTO assignmentPerStudentPerCourse (assignmentid, studentid, courseid) " +
+                "VALUES(@assignmentid, @studentid, @courseid)";
 
             SqlCommand sqlCommand = new SqlCommand(query, con);
 
@@ -1536,13 +1529,12 @@ namespace schoolExercise
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
+                Console.WriteLine();
             }
             finally
             {
                 con.Close();
             }
         }
-
     }
-
 }
