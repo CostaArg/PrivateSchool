@@ -55,42 +55,6 @@ CREATE TABLE [Course]
 );
 GO
 
--- ************************************** [assignmentPerCoursePerStudent]
-
-CREATE TABLE [assignmentPerCoursePerStudent]
-(
- [studentid]    varchar(50) NOT NULL ,
- [courseid]     varchar(50) NOT NULL ,
- [assignmentid] varchar(50) NOT NULL ,
-
- CONSTRAINT [PK_assignmentPerCoursePerStudent] PRIMARY KEY CLUSTERED ([studentid] ASC, [courseid] ASC, [assignmentid] ASC),
- CONSTRAINT [FK_69] FOREIGN KEY ([assignmentid])  REFERENCES [Assignment]([assignmentid]),
- CONSTRAINT [FK_72] FOREIGN KEY ([courseid])  REFERENCES [Course]([courseid]),
- CONSTRAINT [FK_75] FOREIGN KEY ([studentid])  REFERENCES [Student]([studentid])
-);
-GO
-
-CREATE NONCLUSTERED INDEX [fkIdx_69] ON [assignmentPerCoursePerStudent]
- (
-  [assignmentid] ASC
- )
-
-GO
-
-CREATE NONCLUSTERED INDEX [fkIdx_72] ON [assignmentPerCoursePerStudent]
- (
-  [courseid] ASC
- )
-
-GO
-
-CREATE NONCLUSTERED INDEX [fkIdx_75] ON [assignmentPerCoursePerStudent]
- (
-  [studentid] ASC
- )
-
-GO
-
 -- ************************************** [Student]
 
 CREATE TABLE [Student]
@@ -171,3 +135,55 @@ CREATE NONCLUSTERED INDEX [fkIdx_60] ON [trainerPerCourse]
  )
 
 GO
+
+CREATE TABLE [dbo].[assignmentPerCoursePerStudent] (
+    [studentid]    INT NOT NULL,
+    [courseid]     INT NOT NULL,
+    [assignmentid] INT NOT NULL,
+    CONSTRAINT [PK_assignmentPerCoursePerStudent] PRIMARY KEY CLUSTERED ([studentid] ASC, [courseid] ASC, [assignmentid] ASC),
+    CONSTRAINT [FK_90] FOREIGN KEY ([courseid]) REFERENCES [dbo].[Course] ([courseid]),
+    CONSTRAINT [FK_91] FOREIGN KEY ([studentid]) REFERENCES [dbo].[Student] ([studentid]),
+    CONSTRAINT [FK_92] FOREIGN KEY ([assignmentid]) REFERENCES [dbo].[Assignment] ([assignmentid])
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_92]
+    ON [dbo].[assignmentPerCoursePerStudent]([assignmentid] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_90]
+    ON [dbo].[assignmentPerCoursePerStudent]([courseid] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_91]
+    ON [dbo].[assignmentPerCoursePerStudent]([studentid] ASC);
+
+CREATE TABLE [dbo].[assignmentPerCoursePerStudent] (
+    [studentid]    INT NOT NULL,
+    [courseid]     INT NOT NULL,
+    [assignmentid] INT NOT NULL,
+    CONSTRAINT [PK_assignmentPerCoursePerStudent] PRIMARY KEY CLUSTERED ([studentid] ASC, [courseid] ASC, [assignmentid] ASC),
+    CONSTRAINT [FK_72] FOREIGN KEY ([courseid]) REFERENCES [dbo].[Course] ([courseid]),
+    CONSTRAINT [FK_75] FOREIGN KEY ([studentid]) REFERENCES [dbo].[Student] ([studentid]),
+    CONSTRAINT [FK_69] FOREIGN KEY ([assignmentid]) REFERENCES [dbo].[Assignment] ([assignmentid])
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_69]
+    ON [dbo].[assignmentPerCoursePerStudent]([assignmentid] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_72]
+    ON [dbo].[assignmentPerCoursePerStudent]([courseid] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [fkIdx_75]
+    ON [dbo].[assignmentPerCoursePerStudent]([studentid] ASC);
+
+

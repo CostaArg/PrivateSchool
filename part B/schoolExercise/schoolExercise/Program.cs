@@ -103,6 +103,15 @@ namespace schoolExercise
                         Services.InsertTrainerPerCourse(item);
                     }
                 }
+                else if (option == "10")
+                {
+                    data.PutAssignmentsInStudentsInCourses();
+
+                    foreach (var item in data.AssiStuCourIdList)
+                    {
+                        Services.InsertAssignmentPerStudentPerCourse(item);
+                    }
+                }
                 else if (option == "STOP")
                 {
                     Environment.Exit(0);
@@ -122,6 +131,7 @@ namespace schoolExercise
             Console.WriteLine("7. Display Database Information");
             Console.WriteLine("8. Insert Student Per Course");
             Console.WriteLine("9. Insert Trainer Per Course");
+            Console.WriteLine("10. Insert Assignment Per Student Per Course");
 
             string option = Console.ReadLine();
             return option;
@@ -142,6 +152,7 @@ namespace schoolExercise
         public List<AssignmentCourseStudent> ACSList { get; set; } = new List<AssignmentCourseStudent>();
         public List<StuCourId> StuCourIdList { get; set; } = new List<StuCourId>();
         public List<TrainCourId> TrainCourIdList { get; set; } = new List<TrainCourId>();
+        public List<AssiStuCourId> AssiStuCourIdList { get; set; } = new List<AssiStuCourId>();
 
         public Data()
         {
@@ -339,11 +350,52 @@ namespace schoolExercise
 
         public void PrintDbInfo()
         {
-            //var assignList = Services.GetAllAssignments();
-            //var trainList = Services.GetAllTrainers();
-            //var stuList = Services.GetAllStudents();
-            //var courList = Services.GetAllCourses();
-            //var stuPerCourList = Services.GetAllStuPerCour();
+            //A list of all the students
+            var stuList = Services.GetAllStudents();
+
+            foreach (var item in stuList)
+            {
+                item.Output();
+            }
+
+            //A list of all the trainers
+            var trainList = Services.GetAllTrainers();
+
+            foreach (var item in trainList)
+            {
+                item.Output();
+            }
+
+            //A list of all the assignments
+            var assignList = Services.GetAllAssignments();
+
+            foreach (var item in assignList)
+            {
+                item.Output();
+            }
+
+            //A list of all the courses
+            var courList = Services.GetAllCourses();
+
+            foreach (var item in courList)
+            {
+                item.Output();
+            }
+
+            //A list of all the students per course
+            var stuPerCourList = Services.GetAllStuPerCour();
+
+            foreach (var item in stuPerCourList)
+            {
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("Student ID: " + item.Student.StudentId + "  Course ID: " + item.Course.CourseId);
+                Console.WriteLine();
+                item.OutputStudent();
+                item.OutputCourse();
+                Console.WriteLine("===========================================================");
+            }
+
+            //A list of all the trainers per course
             var trainPerCourList = Services.GetAllTrainPerCour();
 
             foreach (var item in trainPerCourList)
@@ -354,79 +406,84 @@ namespace schoolExercise
                 item.OutputTrainer();
                 item.OutputCourse();
                 Console.WriteLine("===========================================================");
-
             }
 
-            //foreach (var item in stuPerCourList)
-            //{
-            //    Console.WriteLine("===========================================================");
-            //    Console.WriteLine("Student ID: " + item.Student.StudentId +"  Course ID: " + item.Course.CourseId);
-            //    Console.WriteLine();
-            //    item.OutputStudent();
-            //    item.OutputCourse();
-            //    Console.WriteLine("===========================================================");
+            //A list of all the assignments per student per course
+            var assiPerStuPerCourList = Services.GetAllAssiPerStuPerCour();
 
-            //}
-
-            //foreach (var item in courList)
-            //{
-            //    item.Output();
-            //}
-
-            //foreach (var item in assignList)
-            //{
-            //    item.Output();
-            //}
-
-            //foreach (var item in trainList)
-            //{
-            //    item.Output();
-            //}
-
-            //foreach (var item in stuList)
-            //{
-            //    item.Output();
-            //}
-
+            foreach (var item in assiPerStuPerCourList)
+            {
+                Console.WriteLine("===========================================================");
+                Console.WriteLine("Assignment ID: " + item.Assignment.AssignmentId + " Student ID: " + 
+                    item.Student.StudentId + " Course ID: " + item.Course.CourseId);
+                Console.WriteLine();
+                item.OutputAssignment();
+                item.OutputStudent();
+                item.OutputCourse();
+                Console.WriteLine("===========================================================");
+            }
         }
-
 
         public void PutStudentsInCourses()
         {
-            //Console.WriteLine("Enter student id: ");
-            //int stuId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter student id: ");
+            int stuId = Convert.ToInt32(Console.ReadLine());
 
-            //Console.WriteLine("Enter course id: ");
-            //int courId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
 
-            Course newCour = new Course();
             Student newStu = new Student();
+            Course newCour = new Course();
 
-            newCour.CourseId = 5;
-            newStu.StudentId = 5;
+            newStu.StudentId = stuId;
+            newCour.CourseId = courId;
 
-            StuCourId scid = new StuCourId(newCour.CourseId, newStu.StudentId);
+            StuCourId scid = new StuCourId(newStu.StudentId, newCour.CourseId);
 
             StuCourIdList.Add(scid);
         }
 
         public void PutTrainersInCourses()
         {
-            //Console.WriteLine("Enter trainer id: ");
-            //int trainId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter trainer id: ");
+            int trainId = Convert.ToInt32(Console.ReadLine());
 
-            //Console.WriteLine("Enter course id: ");
-            //int courId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
 
-            Course newCour = new Course();
             Trainer newTrain = new Trainer();
+            Course newCour = new Course();
 
-            newCour.CourseId = 6;
-            newTrain.TrainerId = 4;
+            newTrain.TrainerId = trainId;
+            newCour.CourseId = courId;
 
-            TrainCourId tcid = new TrainCourId(newCour.CourseId, newTrain.TrainerId);
+            TrainCourId tcid = new TrainCourId(newTrain.TrainerId, newCour.CourseId);
 
             TrainCourIdList.Add(tcid);
+        }
+
+        public void PutAssignmentsInStudentsInCourses()
+        {
+            Console.WriteLine("Enter assignment id: ");
+            int assiId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter student id: ");
+            int stuId = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine("Enter course id: ");
+            int courId = Convert.ToInt32(Console.ReadLine());
+
+            Assignment newAssi = new Assignment();
+            Student newStu = new Student();
+            Course newCour = new Course();
+
+            newAssi.AssignmentId = assiId;
+            newStu.StudentId = stuId;
+            newCour.CourseId = courId;
+
+            AssiStuCourId ascid = new AssiStuCourId(newAssi.AssignmentId, newStu.StudentId, newCour.CourseId);
+
+            AssiStuCourIdList.Add(ascid);
         }
 
         public void PrintAllStudents()
@@ -1038,11 +1095,13 @@ namespace schoolExercise
 
         public void Output()
         {
-            Console.WriteLine(Title);
-            Console.WriteLine(Description);
-            Console.WriteLine(SubDateTime.ToShortDateString());
-            Console.WriteLine(OralMark);
-            Console.WriteLine(TotalMark);
+            Console.WriteLine("-------------");
+            Console.WriteLine("Title:       " + Title);
+            Console.WriteLine("Description: " + Description);
+            Console.WriteLine("SubDateTime: " + SubDateTime.ToShortDateString());
+            Console.WriteLine("OralMark:    " + OralMark);
+            Console.WriteLine("TotalMark:   " + TotalMark);
+            Console.WriteLine("-------------");
         }
 
         public void OutputTitle()
@@ -1087,6 +1146,21 @@ namespace schoolExercise
 
     }
 
+    class AssiStuCourId
+    {
+        public int AssignmentId { get; set; }
+        public int StudentId { get; set; }
+        public int CourseId { get; set; }
+
+        public AssiStuCourId(int assignmentId, int studentId, int courseId)
+        {
+            AssignmentId = assignmentId;
+            StudentId = studentId;
+            CourseId = courseId;
+        }
+
+    }
+
     class TrainCourId
     {
         public int TrainerId { get; set; }
@@ -1109,6 +1183,36 @@ namespace schoolExercise
         {
             Student = student;
             Course = course;
+        }
+
+        public void OutputCourse()
+        {
+            Course.Output();
+        }
+
+        public void OutputStudent()
+        {
+            Student.Output();
+        }
+
+    }
+
+    class AssiStuCour
+    {
+        public Assignment Assignment { get; set; }
+        public Student Student { get; set; }
+        public Course Course { get; set; }
+
+        public AssiStuCour(Assignment assignment, Student student, Course course)
+        {
+            Assignment = assignment;
+            Student = student;
+            Course = course;
+        }
+
+        public void OutputAssignment()
+        {
+            Assignment.Output();
         }
 
         public void OutputCourse()
@@ -1381,7 +1485,8 @@ namespace schoolExercise
                         tempStus.Add(stu);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading students from database was successful!");
+                    Console.WriteLine();
                 }
             }
 
@@ -1424,7 +1529,8 @@ namespace schoolExercise
                         tempCours.Add(cour);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading courses from database was successful!");
+                    Console.WriteLine();
                 }
             }
 
@@ -1465,7 +1571,8 @@ namespace schoolExercise
                         tempTrains.Add(train);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading trainers from database was successful!");
+                    Console.WriteLine();
                 }
             }
 
@@ -1508,7 +1615,8 @@ namespace schoolExercise
                         tempAssign.Add(assign);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading assignments from database was successful");
+                    Console.WriteLine();
                 }
             }
 
@@ -1564,7 +1672,8 @@ namespace schoolExercise
                         tempSPC.Add(stucour);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading students per course from database was successful!");
+                    Console.WriteLine();
                 }
             }
 
@@ -1618,7 +1727,8 @@ namespace schoolExercise
                         tempTPC.Add(traincour);
                     }
 
-                    Console.WriteLine("Database reading was successful!");
+                    Console.WriteLine("Reading trainer per course from database was successful!");
+                    Console.WriteLine();
                 }
             }
 
@@ -1632,6 +1742,73 @@ namespace schoolExercise
             }
 
             return tempTPC;
+
+        }
+
+        public static List<AssiStuCour> GetAllAssiPerStuPerCour()
+        {
+            List<AssiStuCour> tempASC = new List<AssiStuCour>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    string querystring = "SELECT assignment.assignmentid, student.studentid, course.courseid, " +
+                        "assignment.description, assignment.subdatetime, assignment.oralmark, assignment.totalmark, " +
+                        "student.firstname, student.lastname, Student.dateofbirth, student.tuitionfees, course.title, " +
+                        "course.stream, course.type, course.startdate, course.enddate FROM(((assignmentPerStudentPerCourse " +
+                        "INNER JOIN Assignment ON assignmentPerStudentPerCourse.assignmentid = Assignment.assignmentid) INNER JOIN " +
+                        "Student ON assignmentPerStudentPerCourse.studentid = Student.studentid) INNER JOIN Course ON " +
+                        "assignmentPerStudentPerCourse.courseid = Course.courseid); ";
+
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand(querystring, con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Assignment assign = new Assignment(
+                        Convert.ToInt32(reader["AssignmentId"]),
+                        reader["Title"].ToString(),
+                        reader["Description"].ToString(),
+                        Convert.ToDateTime(reader["SubDateTime"]),
+                        Convert.ToDouble(reader["OralMark"]),
+                        Convert.ToDouble(reader["TotalMark"])
+                        );
+                        Student stu = new Student(
+                        Convert.ToInt32(reader["StudentId"]),
+                        reader["FirstName"].ToString(),
+                        reader["LastName"].ToString(),
+                        Convert.ToDateTime(reader["DateOfBirth"]),
+                        Convert.ToInt32(reader["TuitionFees"])
+                        );
+                        Course cour = new Course(
+                        Convert.ToInt32(reader["CourseId"]),
+                        reader["Title"].ToString(),
+                        reader["Stream"].ToString(),
+                        reader["Type"].ToString(),
+                        Convert.ToDateTime(reader["StartDate"]),
+                        Convert.ToDateTime(reader["EndDate"])
+                        );
+                        AssiStuCour assistucour = new AssiStuCour(assign, stu, cour);
+                        tempASC.Add(assistucour);
+                    }
+
+                    Console.WriteLine("Reading assignments per student per course from database was successful");
+                    Console.WriteLine();
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error in the database " + ex.Message);
+            }
+            finally
+            {
+
+            }
+
+            return tempASC;
 
         }
 
@@ -1654,7 +1831,8 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Courses inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -1684,7 +1862,8 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Students inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -1713,7 +1892,8 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Trainers inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -1744,7 +1924,8 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Assignments inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -1771,7 +1952,8 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Students per course inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -1798,7 +1980,37 @@ namespace schoolExercise
             {
                 con.Open();
                 sqlCommand.ExecuteNonQuery();
-                Console.WriteLine("Records Inserted Successfully");
+                Console.WriteLine("Trainers per course inserted successfully");
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Generated. Details: " + ex.ToString());
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public static void InsertAssignmentPerStudentPerCourse(AssiStuCourId ascid)
+        {
+            SqlConnection con = new SqlConnection(conString);
+
+            string query = "INSERT INTO assignmentPerStudentPerCourse (assignmentid, studentid, courseid) VALUES(@assignmentid, @studentid, @courseid)";
+
+            SqlCommand sqlCommand = new SqlCommand(query, con);
+
+            sqlCommand.Parameters.AddWithValue("@assignmentid", ascid.AssignmentId);
+            sqlCommand.Parameters.AddWithValue("@studentid", ascid.StudentId);
+            sqlCommand.Parameters.AddWithValue("@courseid", ascid.CourseId);
+
+            try
+            {
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+                Console.WriteLine("Assignments per student per course inserted successfully");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
