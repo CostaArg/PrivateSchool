@@ -1,0 +1,8 @@
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (1, 1)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (1, 3)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (2, 5)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (3, 1)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (4, 3)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (5, 1)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (5, 2)
+INSERT INTO [dbo].[studentPerCourse] ([studentid], [courseid]) VALUES (6, 5)

@@ -48,9 +48,9 @@ INNER JOIN Student ON assignmentPerStudentPerCourse.studentid = Student.studenti
 INNER JOIN Course ON assignmentPerStudentPerCourse.courseid = Course.courseid);
 
 --students with more than one course
-SELECT student.studentid, course.courseid, student.firstname, student.lastname, student.dateofbirth,
-student.tuitionfees, course.title, course.stream, course.type, course.startdate, course.enddate
-FROM ((studentPerCourse
-INNER JOIN Student ON studentPerCourse.studentid = Student.studentid)
-INNER JOIN Course ON studentPerCourse.courseid = Course.courseid)
-HAVING count(Course.courseid) > 1;
+SELECT s.firstname, s.lastname,
+COUNT(sperc.studentid) AS courseamount
+FROM Student s , studentPerCourse sperc
+WHERE sperc.studentid = s.studentid
+GROUP BY s.firstname, s.lastname
+HAVING COUNT(sperc.studentid) > 1;

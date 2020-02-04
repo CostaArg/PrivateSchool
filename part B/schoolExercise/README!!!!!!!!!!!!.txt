@@ -1,2 +1,0 @@
-Στις γραμμες 38 και 264 με 276 βρισκεται σε comment η προσπαθεια Assignments Per Course Per Student 
-η υπαρχουσα "PrintAssignmentsPerStudent" τυπωνει τα assignments κατω απο τους μαθητες, χωρις να αναφερει το course στα οποια ανηκουν τα assignments

@@ -226,11 +226,11 @@ namespace schoolExercise
             foreach (var item in stuPerMultiCour)
             {
                 Console.WriteLine("===========================================================");
-                Console.WriteLine("Student ID: " + item.Student.StudentId + "  Course ID: " + item.Course.CourseId);
-                Console.WriteLine();
-                item.OutputStudent();
-                item.OutputCourse();
+                Console.WriteLine("Student First Name: " + item.StuFirstName);
+                Console.WriteLine("Student Last Name:  " + item.StuLastName);
+                Console.WriteLine("Course Amount:      " + item.CourseAmount);
                 Console.WriteLine("===========================================================");
+                Console.WriteLine();
             }
         }
 
@@ -907,23 +907,15 @@ namespace schoolExercise
 
     class StuMultiCour
     {
-        public Student Student { get; set; }
-        public Course Course { get; set; }
+        public string StuFirstName { get; set; }
+        public string StuLastName { get; set; }
+        public string CourseAmount { get; set; }
 
-        public StuMultiCour(Student student, Course course)
+        public StuMultiCour(string stuFirstName, string stuLastName, string courseamount)
         {
-            Student = student;
-            Course = course;
-        }
-
-        public void OutputStudent()
-        {
-            Student.Output();
-        }
-
-        public void OutputCourse()
-        {
-            Course.Output();
+            StuFirstName = stuFirstName;
+            StuLastName = stuLastName;
+            CourseAmount = courseamount;
         }
     }
 
@@ -1348,7 +1340,10 @@ namespace schoolExercise
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    string querystring = "";
+                    string querystring = "SELECT s.firstname, s.lastname, COUNT(sperc.studentid) " +
+                        "AS courseamount FROM Student s , studentPerCourse sperc WHERE " +
+                        "sperc.studentid = s.studentid GROUP BY s.firstname, s.lastname " +
+                        "HAVING COUNT(sperc.studentid) > 1; ";
 
                     con.Open();
                     SqlCommand cmd = new SqlCommand(querystring, con);
@@ -1356,22 +1351,11 @@ namespace schoolExercise
 
                     while (reader.Read())
                     {
-                        Student stu = new Student(
-                        Convert.ToInt32(reader["StudentId"]),
-                        reader["FirstName"].ToString(),
-                        reader["LastName"].ToString(),
-                        Convert.ToDateTime(reader["DateOfBirth"]),
-                        Convert.ToInt32(reader["TuitionFees"])
-                        );
-                        Course cour = new Course(
-                        Convert.ToInt32(reader["CourseId"]),
-                        reader["Title"].ToString(),
-                        reader["Stream"].ToString(),
-                        reader["Type"].ToString(),
-                        Convert.ToDateTime(reader["StartDate"]),
-                        Convert.ToDateTime(reader["EndDate"])
-                        );
-                        StuMultiCour stumulticour = new StuMultiCour(stu, cour);
+                        string firstName = reader["FirstName"].ToString();
+                        string lastName = reader["LastName"].ToString();
+                        string courseAmount = reader["CourseAmount"].ToString();
+
+                        StuMultiCour stumulticour = new StuMultiCour(firstName, lastName, courseAmount);
                         tempSPMC.Add(stumulticour);
                     }
 
