@@ -1398,6 +1398,12 @@ namespace schoolExercise
                 Console.WriteLine("Students inserted successfully");
                 Console.WriteLine();
             }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
@@ -1427,6 +1433,12 @@ namespace schoolExercise
                 sqlCommand.ExecuteNonQuery();
                 Console.WriteLine("Trainers inserted successfully");
                 Console.WriteLine();
+            }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
             }
             catch (Exception ex)
             {
@@ -1461,6 +1473,12 @@ namespace schoolExercise
                 Console.WriteLine("Assignments inserted successfully");
                 Console.WriteLine();
             }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
@@ -1494,6 +1512,12 @@ namespace schoolExercise
                 Console.WriteLine("Courses inserted successfully");
                 Console.WriteLine();
             }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
@@ -1523,6 +1547,12 @@ namespace schoolExercise
                 Console.WriteLine("Students per course inserted successfully");
                 Console.WriteLine();
             }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
+            }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Generated. Details: " + ex.ToString());
@@ -1551,6 +1581,12 @@ namespace schoolExercise
                 sqlCommand.ExecuteNonQuery();
                 Console.WriteLine("Trainers per course inserted successfully");
                 Console.WriteLine();
+            }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
             }
             catch (Exception ex)
             {
@@ -1582,6 +1618,12 @@ namespace schoolExercise
                 sqlCommand.ExecuteNonQuery();
                 Console.WriteLine("Assignments per student per course inserted successfully");
                 Console.WriteLine();
+            }
+            catch (SqlException e) when (e.Number == 2627)
+            {
+                Console.WriteLine("Sorry this value is already assigned. Redirecting you to Main Menu.");
+                Console.WriteLine();
+                Program.Menu();
             }
             catch (Exception ex)
             {
