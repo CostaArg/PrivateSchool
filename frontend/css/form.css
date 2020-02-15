@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Khula');
+
+* {
+  font-family: "Khula", sans-serif;
+  font-size: 16px;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(41, 43, 43);
+}
+
+li,
+a,
+button {
+  color: oldlace;
+  text-decoration: none;
+}
+
+label{
+  font-size: 20px;
+}
+
+header {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+}
+
+.navLinks {
+  list-style: none;
+}
+
+.navLinks li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.navLinks li a {
+  transition: all 0.3s ease 0s;
+}
+
+.navLinks li a:hover {
+  color: mediumseagreen;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  color: oldlace;
+  background-color: mediumseagreen;
+  text-align: center;
+  border-radius: 5px;
+  width: 100%;
+  border: 1px solid seagreen;
+}
+
+button:hover {
+  background-color: seagreen;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  width: 94%;
+  background-color: white;
+  margin-bottom: 30px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+  border: none;
+}
+
+form {
+  max-width: 480px;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background: ghostwhite;
+  border-radius: 8px;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: center;
+}
+
+.submitButton {
+  margin-bottom: 10px;
+}

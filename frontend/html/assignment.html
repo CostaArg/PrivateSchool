@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <title>Assignment</title>
+    <link rel="stylesheet" href="../css/form.css">
+</head>
+
+<body>
+
+<header>
+    <a class="homeButton" href="/html/home.html"><button>Home</button></a>
+    <nav>
+        <ul class="navLinks">
+        <li> <a href="/html/course.html">Course</a></li>
+        <li> <a href="/html/trainer.html">Trainer</a></li>
+        <li> <a href="/html/student.html">Student</a></li>
+        <li> <a href="/html/assignment.html">Assignment</a></li>
+    </ul>
+    </nav>
+</header>
+
+    <form action="/register" method="POST">
+        <h2>Assignment</h2>
+        <fieldset>
+
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description">
+
+            <label for="subdatetime">Sub Date Time:</label>
+            <input type="date" id="subdatetime" name="subdatetime">
+
+            <label for="oralmark">Oral Mark:</label>
+            <input type="text" id="oralmark" name="oralmark">
+
+            <label for="totalmark">Total Mark:</label>
+            <input type="text" id="totalmark" name="totalmark">
+
+        </fieldset>
+
+        <button type="submit" class="submitButton">Submit</button>
+    </form>
+
+</body>
+
+</html>

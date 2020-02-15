@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+  <title>Student</title>
+  <link href="https://fonts.googleapis.com/css?family=Khula" rel="stylesheet" type='text/css'>
+  <link rel="stylesheet" href="../css/form.css">
+</head>
+
+<body>
+
+  <a class="homeButton" href="/html/home.html">Home</a>
+  <a class="homeButton" href="/html/course.html">Course</a>
+  <a class="homeButton" href="/html/trainer.html">Trainer</a>
+  <a class="homeButton" href="/html/student.html">Student</a>
+  <a class="homeButton" href="/html/assignment.html">Assignment</a>
+
+  <form action="/register" method="POST">
+    <h2>Student</h2>
+    <fieldset>
+
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" name="firstname">
+
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" name="lastname">
+
+      <label for="dateofbirth">Date of Birth:</label>
+      <input type="date" id="dateofbirth" name="dateofbirth">
+
+      <label for="tuitionfees">Tuition Fees:</label>
+      <input type="text" id="tuitionfees" name="tuitionfees">
+
+    </fieldset>
+
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+
+</html>
