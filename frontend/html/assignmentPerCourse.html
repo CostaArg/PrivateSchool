@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/form.css">
-    <title>Assignment</title>
+    <title>Assignment Per Course</title>
 </head>
 
 <body>
@@ -27,28 +27,32 @@
 
     <form>
 
-        <h2>Assignment</h2>
+        <h2>Assignment Per Course</h2>
 
         <fieldset>
 
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title">
+            <label for="assignment">Choose a assignment:</label>
 
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description">
+            <select id="assignment">
+                <option value="projectbank">Project Bank</option>
+                <option value="projecteshop">Project E-Shop</option>
+                <option value="projectstocks">Project Stocks</option>
+                <option value="projectarchitect">Project Architect</option>
+            </select>
 
-            <label for="subdatetime">Sub Date Time:</label>
-            <input type="date" id="subdatetime" name="subdatetime">
+            <label for="course">Choose a course:</label>
 
-            <label for="oralmark">Oral Mark:</label>
-            <input type="text" id="oralmark" name="oralmark">
-
-            <label for="totalmark">Total Mark:</label>
-            <input type="text" id="totalmark" name="totalmark">
+            <select id="course">
+                <option value="csharp">C#</option>
+                <option value="java">Java</option>
+                <option value="python">Python</option>
+                <option value="javascript">Javascript</option>
+            </select>
 
         </fieldset>
 
-        <button type="submit" class="submitButton">Submit</button>
+        <button type="submit">Submit</button>
+
     </form>
 
 </body>

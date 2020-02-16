@@ -9,7 +9,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: rgb(41, 43, 43);
+  background-color: rgb(43, 43, 43);
 }
 
 li,
@@ -50,14 +50,14 @@ header {
 
 button {
   font-size: 20px;
-  padding: 10px 30px;
+  padding: 8px 26px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease 0s;
   color: oldlace;
   background-color: mediumseagreen;
   text-align: center;
-  border-radius: 5px;
   width: 100%;
   border: 1px solid seagreen;
 }
@@ -68,7 +68,8 @@ button:hover {
 
 input[type="text"],
 input[type="password"],
-input[type="date"] {
+input[type="date"],
+select {
   border: none;
   font-size: 16px;
   height: auto;
@@ -76,7 +77,7 @@ input[type="date"] {
   outline: 0;
   padding: 15px;
   width: 94%;
-  background-color: white;
+  background-color: rgba(43, 43, 43, 0.1);
   margin-bottom: 30px;
 }
 
@@ -100,4 +101,8 @@ h2 {
 
 .submitButton {
   margin-bottom: 10px;
+}
+
+.homeButton {
+
 }

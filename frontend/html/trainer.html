@@ -4,22 +4,31 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <title>Trainer</title>
-    <link href="https://fonts.googleapis.com/css?family=Khula" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="../css/form.css">
+    <title>Trainer</title>
 </head>
 
 <body>
 
-    <a class="homeButton" href="/html/home.html">Home</a>
-    <a class="homeButton" href="/html/course.html">Course</a>
-    <a class="homeButton" href="/html/trainer.html">Trainer</a>
-    <a class="homeButton" href="/html/student.html">Student</a>
-    <a class="homeButton" href="/html/assignment.html">Assignment</a>
+    <header>
+        <a class="homeButton" href="/html/home.html"><button>Home</button></a>
+        <nav>
+            <ul class="navLinks">
+                <li> <a href="/html/course.html">Course</a></li>
+                <li> <a href="/html/trainer.html">Trainer</a></li>
+                <li> <a href="/html/student.html">Student</a></li>
+                <li> <a href="/html/assignment.html">Assignment</a></li>
+                <li> <a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
+                <li> <a href="/html/studentPerCourse.html">Student per Course</a></li>
+                <li> <a href="/html/assignmentPerCourse.html">Assignment per Course</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <form action="/register" method="POST">
+    <form>
+
         <h2>Trainer</h2>
+
         <fieldset>
 
             <label for="firstname">First Name:</label>
@@ -34,6 +43,7 @@
         </fieldset>
 
         <button type="submit">Submit</button>
+
     </form>
 
 </body>
