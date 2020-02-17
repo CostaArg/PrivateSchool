@@ -4,26 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/form.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
     <title>Course</title>
   </head>
 
   <body>
-    <header>
-      <a class="homeButton" href="/html/home.html"><button>Home</button></a>
-      <nav>
-        <ul class="navLinks">
-          <li><a href="/html/course.html">Course</a></li>
-          <li><a href="/html/trainer.html">Trainer</a></li>
-          <li><a href="/html/student.html">Student</a></li>
-          <li><a href="/html/assignment.html">Assignment</a></li>
-          <li><a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
-          <li><a href="/html/studentPerCourse.html">Student per Course</a></li>
-          <li>
-            <a href="/html/assignmentPerCourse.html">Assignment per Course</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <div id="menu"></div>
+
+    <script>
+      jQuery("#menu").load("./new.html");
+    </script>
 
     <form>
       <h2>Course</h2>
