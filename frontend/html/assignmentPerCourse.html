@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/form.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/form.css" />
     <title>Assignment Per Course</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <a class="homeButton" href="/html/home.html"><button>Home</button></a>
-        <nav>
-            <ul class="navLinks">
-                <li> <a href="/html/course.html">Course</a></li>
-                <li> <a href="/html/trainer.html">Trainer</a></li>
-                <li> <a href="/html/student.html">Student</a></li>
-                <li> <a href="/html/assignment.html">Assignment</a></li>
-                <li> <a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
-                <li> <a href="/html/studentPerCourse.html">Student per Course</a></li>
-                <li> <a href="/html/assignmentPerCourse.html">Assignment per Course</a></li>
-            </ul>
-        </nav>
+      <a class="homeButton" href="/html/home.html"><button>Home</button></a>
+      <nav>
+        <ul class="navLinks">
+          <li><a href="/html/course.html">Course</a></li>
+          <li><a href="/html/trainer.html">Trainer</a></li>
+          <li><a href="/html/student.html">Student</a></li>
+          <li><a href="/html/assignment.html">Assignment</a></li>
+          <li><a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
+          <li><a href="/html/studentPerCourse.html">Student per Course</a></li>
+          <li>
+            <a href="/html/assignmentPerCourse.html">Assignment per Course</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <form>
+      <h2>Assignment Per Course</h2>
 
-        <h2>Assignment Per Course</h2>
+      <fieldset>
+        <label for="assignment">Choose a assignment:</label>
 
-        <fieldset>
+        <select id="assignment">
+          <option value="projectbank">Project Bank</option>
+          <option value="projecteshop">Project E-Shop</option>
+          <option value="projectstocks">Project Stocks</option>
+          <option value="projectarchitect">Project Architect</option>
+        </select>
 
-            <label for="assignment">Choose a assignment:</label>
+        <label for="course">Choose a course:</label>
 
-            <select id="assignment">
-                <option value="projectbank">Project Bank</option>
-                <option value="projecteshop">Project E-Shop</option>
-                <option value="projectstocks">Project Stocks</option>
-                <option value="projectarchitect">Project Architect</option>
-            </select>
+        <select id="course">
+          <option value="csharp">C#</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
+          <option value="javascript">Javascript</option>
+        </select>
+      </fieldset>
 
-            <label for="course">Choose a course:</label>
-
-            <select id="course">
-                <option value="csharp">C#</option>
-                <option value="java">Java</option>
-                <option value="python">Python</option>
-                <option value="javascript">Javascript</option>
-            </select>
-
-        </fieldset>
-
-        <button type="submit">Submit</button>
-
+      <button type="submit">Submit</button>
     </form>
-
-</body>
-
+  </body>
 </html>

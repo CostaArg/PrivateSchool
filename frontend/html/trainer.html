@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/form.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/form.css" />
     <title>Trainer</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <a class="homeButton" href="/html/home.html"><button>Home</button></a>
-        <nav>
-            <ul class="navLinks">
-                <li> <a href="/html/course.html">Course</a></li>
-                <li> <a href="/html/trainer.html">Trainer</a></li>
-                <li> <a href="/html/student.html">Student</a></li>
-                <li> <a href="/html/assignment.html">Assignment</a></li>
-                <li> <a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
-                <li> <a href="/html/studentPerCourse.html">Student per Course</a></li>
-                <li> <a href="/html/assignmentPerCourse.html">Assignment per Course</a></li>
-            </ul>
-        </nav>
+      <a class="homeButton" href="/html/home.html"><button>Home</button></a>
+      <nav>
+        <ul class="navLinks">
+          <li><a href="/html/course.html">Course</a></li>
+          <li><a href="/html/trainer.html">Trainer</a></li>
+          <li><a href="/html/student.html">Student</a></li>
+          <li><a href="/html/assignment.html">Assignment</a></li>
+          <li><a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
+          <li><a href="/html/studentPerCourse.html">Student per Course</a></li>
+          <li>
+            <a href="/html/assignmentPerCourse.html">Assignment per Course</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <form>
+      <h2>Trainer</h2>
 
-        <h2>Trainer</h2>
+      <fieldset>
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" />
 
-        <fieldset>
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" />
 
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" />
+      </fieldset>
 
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname">
-
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject">
-
-        </fieldset>
-
-        <button type="submit">Submit</button>
-
+      <button type="submit">Submit</button>
     </form>
-
-</body>
-
+  </body>
 </html>

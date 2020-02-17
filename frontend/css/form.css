@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Khula');
+@import url("https://fonts.googleapis.com/css?family=Khula");
 
 * {
   font-family: "Khula", sans-serif;
@@ -19,7 +19,7 @@ button {
   text-decoration: none;
 }
 
-label{
+label {
   font-size: 20px;
 }
 
@@ -101,8 +101,4 @@ h2 {
 
 .submitButton {
   margin-bottom: 10px;
-}
-
-.homeButton {
-
 }

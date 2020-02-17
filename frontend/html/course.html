@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/form.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/form.css" />
     <title>Course</title>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <a class="homeButton" href="/html/home.html"><button>Home</button></a>
-        <nav>
-            <ul class="navLinks">
-                <li> <a href="/html/course.html">Course</a></li>
-                <li> <a href="/html/trainer.html">Trainer</a></li>
-                <li> <a href="/html/student.html">Student</a></li>
-                <li> <a href="/html/assignment.html">Assignment</a></li>
-                <li> <a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
-                <li> <a href="/html/studentPerCourse.html">Student per Course</a></li>
-                <li> <a href="/html/assignmentPerCourse.html">Assignment per Course</a></li>
-            </ul>
-        </nav>
+      <a class="homeButton" href="/html/home.html"><button>Home</button></a>
+      <nav>
+        <ul class="navLinks">
+          <li><a href="/html/course.html">Course</a></li>
+          <li><a href="/html/trainer.html">Trainer</a></li>
+          <li><a href="/html/student.html">Student</a></li>
+          <li><a href="/html/assignment.html">Assignment</a></li>
+          <li><a href="/html/trainerPerCourse.html">Trainer per Course</a></li>
+          <li><a href="/html/studentPerCourse.html">Student per Course</a></li>
+          <li>
+            <a href="/html/assignmentPerCourse.html">Assignment per Course</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <form>
-        <h2>Course</h2>
-        <fieldset>
+      <h2>Course</h2>
+      <fieldset>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" />
 
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title">
+        <label for="stream">Stream:</label>
+        <input type="text" id="stream" name="stream" />
 
-            <label for="stream">Stream:</label>
-            <input type="text" id="stream" name="stream">
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" />
 
-            <label for="type">Type:</label>
-            <input type="text" id="type" name="type">
+        <label for="startdate">Start Date:</label>
+        <input type="date" id="startdate" name="startdate" />
 
-            <label for="startdate">Start Date:</label>
-            <input type="date" id="startdate" name="startdate">
+        <label for="enddate">End Date:</label>
+        <input type="date" id="enddate" name="enddate" />
+      </fieldset>
 
-            <label for="enddate">End Date:</label>
-            <input type="date" id="enddate" name="enddate">
-
-        </fieldset>
-
-        <button type="submit">Submit</button>
+      <button type="submit">Submit</button>
     </form>
-
-</body>
-
+  </body>
 </html>
