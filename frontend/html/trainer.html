@@ -13,13 +13,31 @@
 
       <fieldset>
         <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" />
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" />
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="subject">Subject:</label>
-        <input type="text" id="subject" name="subject" />
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
       </fieldset>
 
       <button type="submit">Submit</button>

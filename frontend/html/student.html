@@ -13,16 +13,34 @@
 
       <fieldset>
         <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" />
+        <input
+          type="text"
+          id="firstname"
+          name="firstname"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" />
+        <input
+          type="text"
+          id="lastname"
+          name="lastname"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="dateofbirth">Date of Birth:</label>
         <input type="date" id="dateofbirth" name="dateofbirth" />
 
         <label for="tuitionfees">Tuition Fees:</label>
-        <input type="text" id="tuitionfees" name="tuitionfees" />
+        <input
+          type="text"
+          id="tuitionfees"
+          name="tuitionfees"
+          pattern="[0-9]{0,10}"
+          title="Only numbers accepted"
+        />
       </fieldset>
 
       <button type="submit">Submit</button>

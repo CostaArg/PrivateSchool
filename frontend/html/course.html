@@ -23,13 +23,31 @@
       <h2>Course</h2>
       <fieldset>
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="stream">Stream:</label>
-        <input type="text" id="stream" name="stream" />
+        <input
+          type="text"
+          id="stream"
+          name="stream"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="type">Type:</label>
-        <input type="text" id="type" name="type" />
+        <input
+          type="text"
+          id="type"
+          name="type"
+          pattern="[a-zA-Z0-9 ]{0,50}"
+          title="Only alphanumeric characters accepted"
+        />
 
         <label for="startdate">Start Date:</label>
         <input type="date" id="startdate" name="startdate" />
