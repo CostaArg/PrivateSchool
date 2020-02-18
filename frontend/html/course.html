@@ -28,7 +28,7 @@
           id="title"
           name="title"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="stream">Stream:</label>
@@ -37,7 +37,7 @@
           id="stream"
           name="stream"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="type">Type:</label>
@@ -46,14 +46,28 @@
           id="type"
           name="type"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="startdate">Start Date:</label>
-        <input type="date" id="startdate" name="startdate" />
+        <input
+          type="date"
+          id="startdate"
+          name="startdate"
+          min="01-01-2015"
+          max="31-12-2024"
+          title="Date should be from 2015 until 2024"
+        />
 
         <label for="enddate">End Date:</label>
-        <input type="date" id="enddate" name="enddate" />
+        <input
+          type="date"
+          id="enddate"
+          name="enddate"
+          min="01-01-2015"
+          max="31-12-2024"
+          title="Date should be from 2015 until 2024"
+        />
       </fieldset>
 
       <button type="submit">Submit</button>

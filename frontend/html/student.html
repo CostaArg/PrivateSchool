@@ -30,7 +30,7 @@
           id="firstname"
           name="firstname"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="lastname">Last Name:</label>
@@ -39,11 +39,18 @@
           id="lastname"
           name="lastname"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="dateofbirth">Date of Birth:</label>
-        <input type="date" id="dateofbirth" name="dateofbirth" />
+        <input
+          type="date"
+          id="dateofbirth"
+          name="dateofbirth"
+          min="01-01-1900"
+          max="31-12-2019"
+          title="Date should be from 1900 until 2019"
+        />
 
         <label for="tuitionfees">Tuition Fees:</label>
         <input
@@ -51,7 +58,7 @@
           id="tuitionfees"
           name="tuitionfees"
           pattern="[0-9]{0,10}"
-          title="Only numbers accepted"
+          title="Only numbers accepted - Max length 10"
         />
       </fieldset>
 

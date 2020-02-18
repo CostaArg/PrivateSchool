@@ -29,7 +29,7 @@
           id="title"
           name="title"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="description">Description:</label>
@@ -38,11 +38,18 @@
           id="description"
           name="description"
           pattern="[a-zA-Z0-9 ]{0,50}"
-          title="Only alphanumeric characters accepted"
+          title="Only alphanumeric characters accepted - Max length 50"
         />
 
         <label for="subdatetime">Sub Date Time:</label>
-        <input type="date" id="subdatetime" name="subdatetime" />
+        <input
+          type="date"
+          id="subdatetime"
+          name="subdatetime"
+          min="01-01-2015"
+          max="31-12-2024"
+          title="Date should be from 2015 until 2024"
+        />
 
         <label for="oralmark">Oral Mark:</label>
         <input
@@ -50,7 +57,7 @@
           id="oralmark"
           name="oralmark"
           pattern="[0-9]{0,10}"
-          title="Only numbers accepted"
+          title="Only numbers accepted - Max length 10"
         />
 
         <label for="totalmark">Total Mark:</label>
@@ -59,7 +66,7 @@
           id="totalmark"
           name="totalmark"
           pattern="[0-9]{0,10}"
-          title="Only numbers accepted"
+          title="Only numbers accepted - Max length 10"
         />
       </fieldset>
 
