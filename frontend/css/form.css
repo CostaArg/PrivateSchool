@@ -99,6 +99,18 @@ h2 {
   text-align: center;
 }
 
+h1 {
+  font-size: 30px;
+  text-align: center;
+  color: oldlace;
+}
+
+h3 {
+  font-size: 20px;
+  text-align: center;
+  color: oldlace;
+}
+
 .submitButton {
   margin-bottom: 10px;
 }
